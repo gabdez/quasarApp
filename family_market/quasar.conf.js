@@ -22,12 +22,14 @@ module.exports = function(ctx) {
       components: [
         "QLayout",
         "QHeader",
+        "QFooter",
         "QDrawer",
         "QPageContainer",
         "QPage",
         "QToolbar",
         "QToolbarTitle",
         "QBtn",
+        "QCheckbox",
         "QIcon",
         "QList",
         "QItem",
@@ -35,7 +37,10 @@ module.exports = function(ctx) {
         "QItemLabel",
         "QImg",
         "QInput",
-        "QSlideTransition"
+        "QSlideTransition",
+        "QAvatar",
+        "QSeparator",
+        "QBadge"
       ],
 
       directives: ["Ripple"],
