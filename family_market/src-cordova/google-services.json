@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "874117062435",
+    "firebase_url": "https://my-family-market.firebaseio.com",
+    "project_id": "my-family-market",
+    "storage_bucket": "my-family-market.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874117062435:android:e959353037c44e5b",
+        "android_client_info": {
+          "package_name": "org.cordova.family.market.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874117062435-d9rrbd4buhnfvffea6lo5hj8649vv9bf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpd-_wbMNOtuRUhqbdySnpgi-JK1y5RU8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
