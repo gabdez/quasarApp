@@ -1,4 +1,3 @@
 export default {
-  counter: 1,
-  items: []
+  list_todo_market: []
 };

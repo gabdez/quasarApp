@@ -2,7 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import items from "./module-items";
+import UUID from "vue-uuid";
 
+Vue.use(UUID);
 Vue.use(Vuex);
 
 /*

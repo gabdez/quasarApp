@@ -5,9 +5,17 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PageLogin.vue") }]
   },
   {
-    path: "/listItems",
-    component: () => import("layouts/ListItems.vue"),
-    children: [{ path: "", component: () => import("pages/PageListItems.vue") }]
+    path: "/allLists",
+    component: () => import("layouts/LayoutAllLists.vue"),
+    children: [
+      { path: "", name: "PageAllLists", component: () => import("pages/PageAllLists.vue") },
+      { path: "editList/:idList", name: "editList", component: () => import("pages/PageEditList.vue") }
+    ]
+  },
+  {
+    path: "/:idList/Items",
+    component: () => import("layouts/LayoutItems.vue"),
+    children: [{ path: "", component: () => import("pages/PageItems.vue") }]
   }
 ];
 

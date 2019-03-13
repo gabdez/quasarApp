@@ -24,7 +24,7 @@
             </q-input>
             <div class="justify-between flex q-pt-sm">
                 <q-btn @click="clearCompleted" outline color="warning" label="clear completed" icon="done" class="btn_list"/>
-                <q-btn @click="deleteAll" outline color="negative" label="clear all" icon="delete_outline" class="btn_list"/>
+                <q-btn @click="clearAll" outline color="negative" label="clear all" icon="delete_outline" class="btn_list"/>
             </div>
             <div class="q-gutter-sm">
                 <q-checkbox v-model="hideCompleted" label="Hide completed article"/>
@@ -35,43 +35,59 @@
 
 <script>
 import { scroll } from "quasar";
+import { LocalStorage } from "quasar";
 const { getScrollTarget, getScrollHeight, setScrollPosition } = scroll;
 export default {
-    name: "ListItems",
+    name: "Items",
+    props: ["list"],
     data() {
-        return { newItemName: "", hideCompleted: false };
+        return { newItemName: "", hideCompleted: false, heightLabel: 0 };
+    },
+    mounted() {
+        let el = document.getElementsByClassName("labelHeader")[0];
+        this.heightLabel = el.clientHeight;
     },
     methods: {
         addItem() {
             this.$refs.name_article.focus();
-            this.$store.commit("items/addItem", this.newItemName.trim());
+            var list = this.list;
+            var newItem = this.newItemName.trim();
+            this.$store.commit("items/addItem", { newItem, list });
             this.newItemName = "";
             this.scrollToElement(document.getElementsByClassName("listArticle")[0]);
+            this.setLocalStorage();
         },
         deleteItem(item) {
-            this.$store.commit("items/deleteItem", item);
+            var list = this.list;
+            this.$store.commit("items/deleteItem", { item, list });
+            this.setLocalStorage();
         },
         clearCompleted() {
-            this.$store.commit("items/clearCompleted");
+            this.$store.commit("items/clearCompleted", this.list);
+            this.setLocalStorage();
         },
-        deleteAll() {
-            this.$store.commit("items/deleteAll");
+        clearAll() {
+            this.$store.commit("items/deleteAll", this.list);
+            this.setLocalStorage();
         },
         scrollToElement(el) {
             let target = getScrollTarget(el);
             let offset = getScrollHeight(target);
-            let duration = 100;
+            let duration = 200;
             setScrollPosition(target, offset, duration);
+        },
+        setLocalStorage() {
+            LocalStorage.set("list_todo_market", this.$store.getters["items/getAllLists"]);
         }
     },
     computed: {
         items() {
-            return this.hideCompleted ? this.$store.getters["items/getAllUncheckedItems"] : this.$store.getters["items/getAllItems"];
+            return this.hideCompleted
+                ? this.$store.getters["items/getAllUncheckedItems"](this.list.id)
+                : this.$store.getters["items/getAllItems"](this.list.id);
         },
         styleList() {
-            console.log("ga");
-            let el = document.getElementsByClassName("q-list")[0];
-            let height = el ? getScrollTarget(el) : "145px";
+            let height = this.heightLabel != 0 ? this.heightLabel + "px" : "0px";
             return { paddingBottom: height };
         }
     }
@@ -111,6 +127,7 @@ export default {
 }
 
 .labelHeader {
+    border-top: solid 1px #5271FF;
     width: 100%;
     position: fixed;
     bottom: 0px;

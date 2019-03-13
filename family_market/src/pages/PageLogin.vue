@@ -1,6 +1,5 @@
 <template>
     <q-page class="flex flex-center loginWallpaper">
-        <!-- <q-img src="assets/family_market.png" class="loginWallpaper"></q-img> -->
         <LoginVue/>
     </q-page>
 </template>

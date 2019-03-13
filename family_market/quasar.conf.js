@@ -40,13 +40,24 @@ module.exports = function(ctx) {
         "QSlideTransition",
         "QAvatar",
         "QSeparator",
-        "QBadge"
+        "QBadge",
+        "QCardActions",
+        "QCardSection",
+        "QCard",
+        "QChip",
+        "QTabPanels",
+        "QTabPanel",
+        "QDialog",
+        "QSelect"
       ],
 
-      directives: ["Ripple"],
+      directives: ["Ripple", "CloseDialog"],
 
       // Quasar plugins
-      plugins: ["Notify"]
+      plugins: [
+        "LocalStorage"
+        /* "Notify" */
+      ]
 
       // iconSet: 'ionicons-v4'
       // lang: 'de' // Quasar language

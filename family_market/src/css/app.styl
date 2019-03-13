@@ -1,1 +1,41 @@
 // app global css
+// "quasar-variables" is a Webpack alias injected by Quasar CLI
+@import '~quasar-variables';
+
+.backgroundApp{
+    background-color: $primary;
+}
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 0.5s, transform 0.5s;
+}
+.page-enter,
+.page-leave-to {
+    opacity: 0;
+    transform: translateY(-20%);
+}
+
+
+
+.list-enter-active{
+    animation: fadein .2s;
+}
+.list-leave-active {
+    animation: fadein .2s reverse;
+}
+
+
+@-webkit-keyframes fadein {
+    from {  transform:scale(0) }
+    to {  transform:scale(1)}
+}
+
+@-moz-keyframes fadein {
+    from {  transform:scale(0) }
+    to {  transform:scale(1)}
+}
+
+@keyframes fadein {
+    from {  transform:scale(0) }
+    to {  transform:scale(1)}
+}

@@ -5,7 +5,7 @@
         <q-input v-model="password" bg-color="white" color="light-blue-5" outlined type="password" placeholder="password"/>
         <br>-->
         <span class="row justify-center">
-            <q-btn color="light-blue-5" :ripple="false" label="Go shopping" :icon-right="'fas fa-shopping-cart'" @click="$router.push('/listItems')"/>
+            <q-btn color="light-blue-5" :ripple="false" label="Go shopping" :icon-right="'fas fa-shopping-cart'" @click="$router.push('/allLists')"/>
         </span>
     </div>
 </template>
