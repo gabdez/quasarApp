@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <h5 class="text-weight-thin q-ma-sm text-center text-white">Your todo-market lists</h5>
+    <div class="q-pt-xl q-px-sm">
+        <!-- 
+        <h5 class="text-weight-thin q-pa-md q-ma-none text-center text-white">Your todo-market lists</h5>-->
         <template>
-            <q-tab-panels :value="listSelected.id" animated transition-prev="slide-right" transition-next="slide-left">
+            <q-tab-panels swipeable :value="chipSelected" animated transition-prev="slide-right" transition-next="slide-left">
                 <q-tab-panel v-for="list in allLists" :key="list.id" :name="list.id">
                     <q-card v-ripple class="my-card bg-light-blue-5 text-white q-ma-sm" @click="$router.push('/'+list.id+'/Items')">
                         <q-card-section>
@@ -18,7 +19,7 @@
                         <q-card-actions class="flex-center">
                             <span class="float-right">
                                 <q-btn icon="delete_forever" color="negative" @click.stop="confirmDelete = true"></q-btn>
-                                <q-btn class="q-mx-sm" icon="edit" color="primary" @click.stop="$router.push('/allLists/EditList/'+list.id)"></q-btn>
+                                <q-btn class="q-mx-sm" icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
                                 <q-btn outline @click.stop="list.favorite = !list.favorite" :color="list.favorite == true ? 'yellow': 'white'">
                                     <q-icon name="star"></q-icon>
                                 </q-btn>
@@ -37,10 +38,7 @@
                 <q-icon v-if="list.favorite" name="star" color="yellow"></q-icon>
             </q-chip>
         </div>
-        <div class="flex flex-center">
-            <h5 class="text-weight-thin q-ma-sm text-center text-white">create new list right now!</h5>
-            <q-btn class="self-center" color="red" label="create" @click="$router.push('/allLists/editList/new')"></q-btn>
-        </div>
+        <q-btn class="absolute-bottom-right q-ma-lg" round color="red" icon="add" @click="$router.push('/user/editList/new')"></q-btn>
 
         <q-dialog v-model="confirmDelete" persistent>
             <q-card>
@@ -83,14 +81,14 @@ export default {
         },
         deleteList() {
             var list = this.listSelected;
-            this.$store.commit("items/deleteList", list);
-            LocalStorage.set("list_todo_market", this.$store.getters["items/getAllLists"]);
+            this.$store.commit("lists/deleteList", list);
+            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
             this.chipSelected = null;
         }
     },
     computed: {
         listSelected() {
-            return this.$store.getters["items/getList"](this.chipSelected);
+            return this.$store.getters["lists/getList"](this.chipSelected);
         }
     }
 };

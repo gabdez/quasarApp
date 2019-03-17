@@ -1,7 +1,9 @@
 <template>
     <q-layout>
         <q-page-container>
-            <router-view></router-view>
+            <transition name="page" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </q-page-container>
     </q-layout>
 </template>

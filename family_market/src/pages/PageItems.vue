@@ -24,7 +24,7 @@ export default {
     },
     computed: {
         list() {
-            return this.$store.getters["items/getList"](this.idList);
+            return this.$store.getters["lists/getList"](this.idList);
         }
     }
 };

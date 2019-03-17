@@ -17,7 +17,7 @@ export default {
     mounted() {},
     computed: {
         list() {
-            return this.$route.params.idList == "new" ? {} : this.$store.getters["items/getList"](this.$route.params.idList);
+            return this.$route.params.idList == "new" ? {} : this.$store.getters["lists/getList"](this.$route.params.idList);
         }
     }
 };

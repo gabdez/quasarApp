@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import items from "./module-items";
+import lists from "./module-lists";
+import users from "./module-users";
 import UUID from "vue-uuid";
 
 Vue.use(UUID);
@@ -15,7 +16,8 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      items
+      lists,
+      users
     }
   });
 

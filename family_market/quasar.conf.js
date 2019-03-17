@@ -48,16 +48,20 @@ module.exports = function(ctx) {
         "QTabPanels",
         "QTabPanel",
         "QDialog",
-        "QSelect"
+        "QSelect",
+        "QSpinner",
+        "QRadio"
       ],
 
       directives: ["Ripple", "CloseDialog"],
 
       // Quasar plugins
-      plugins: [
-        "LocalStorage"
-        /* "Notify" */
-      ]
+      plugins: ["LocalStorage", "Notify"],
+      config: {
+        notify: {
+          /* Notify defaults */
+        }
+      }
 
       // iconSet: 'ionicons-v4'
       // lang: 'de' // Quasar language

@@ -52,22 +52,22 @@ export default {
             this.$refs.name_article.focus();
             var list = this.list;
             var newItem = this.newItemName.trim();
-            this.$store.commit("items/addItem", { newItem, list });
+            this.$store.commit("lists/addItem", { newItem, list });
             this.newItemName = "";
             this.scrollToElement(document.getElementsByClassName("listArticle")[0]);
             this.setLocalStorage();
         },
         deleteItem(item) {
             var list = this.list;
-            this.$store.commit("items/deleteItem", { item, list });
+            this.$store.commit("lists/deleteItem", { item, list });
             this.setLocalStorage();
         },
         clearCompleted() {
-            this.$store.commit("items/clearCompleted", this.list);
+            this.$store.commit("lists/clearCompleted", this.list);
             this.setLocalStorage();
         },
         clearAll() {
-            this.$store.commit("items/deleteAll", this.list);
+            this.$store.commit("lists/deleteAll", this.list);
             this.setLocalStorage();
         },
         scrollToElement(el) {
@@ -77,14 +77,14 @@ export default {
             setScrollPosition(target, offset, duration);
         },
         setLocalStorage() {
-            LocalStorage.set("list_todo_market", this.$store.getters["items/getAllLists"]);
+            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
         }
     },
     computed: {
         items() {
             return this.hideCompleted
-                ? this.$store.getters["items/getAllUncheckedItems"](this.list.id)
-                : this.$store.getters["items/getAllItems"](this.list.id);
+                ? this.$store.getters["lists/getAllUncheckedItems"](this.list.id)
+                : this.$store.getters["lists/getAllItems"](this.list.id);
         },
         styleList() {
             let height = this.heightLabel != 0 ? this.heightLabel + "px" : "0px";

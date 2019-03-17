@@ -25,7 +25,7 @@ export default {
     components: {},
     methods: {
         endEdit() {
-            LocalStorage.set("list_todo_market", this.$store.getters["items/getAllLists"]);
+            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
             this.$router.go(-1);
         }
     }

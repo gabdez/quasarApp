@@ -1,14 +1,18 @@
 <template>
-    <div style="padding-top:75px;">
-        <!--         <q-input outlined color="light-blue-5" bg-color="white" v-model="username" placeholder="username"/>
+    <div style="padding-top:75px; width:90%;">
+        <q-input outlined color="light-blue-5" bg-color="white" v-model="email" placeholder="email"/>
         <br>
         <q-input v-model="password" bg-color="white" color="light-blue-5" outlined type="password" placeholder="password"/>
-        <br>-->
+        <q-checkbox v-model="rememberMe" class="text-white" color="light-blue-5" label="Remember me"/>
+        <div class="text-red">{{errorMsg}}</div>
+        <br>
         <span class="row justify-center">
-            <q-btn color="light-blue-5" :ripple="false" label="Go shopping" :icon-right="'fas fa-shopping-cart'" @click="$router.push('/allLists')"/>
+            <q-btn color="light-blue-5" :loading="loading" :ripple="false" label="Login" :icon-right="'fas fa-shopping-cart'" @click="login">
+                <template v-slot:loading>
+                    <q-spinner/>
+                </template>
+            </q-btn>
         </span>
-        <q-btn @click="firebaseTest">firebase</q-btn>
-        {{error}}
     </div>
 </template>
 
@@ -21,10 +25,13 @@ export default {
     name: "Login",
     data() {
         return {
-            username: "",
+            email: "",
             password: "",
             isPwd: true,
-            error: "rien"
+            error: "rien",
+            loading: false,
+            errorMsg: "",
+            rememberMe: false
         };
     },
     methods: {
@@ -42,14 +49,30 @@ export default {
                 .catch(function() {
                     self.error = "Error adding document:";
                 });
-            /*             db.collection("lists")
+            db.collection("lists")
                 .get()
                 .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
-                        console.log(doc);
-                        //console.log(`${doc.id} => ${doc.data()}`);
+                        console.log(`${doc.id} => ${doc.data()}`);
                     });
-                }); */
+                });
+        },
+        login() {
+            this.errorMsg = "";
+            this.loading = true;
+            this.$store
+                .dispatch("users/userLogin", {
+                    email: this.email,
+                    password: this.password
+                })
+                .then(data => {
+                    this.loading = false;
+                    this.$router.push("/user");
+                })
+                .catch(err => {
+                    this.errorMsg = err.message;
+                    this.loading = false;
+                });
         }
     }
 };

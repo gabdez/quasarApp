@@ -2,14 +2,15 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/Home.vue"),
-    children: [{ path: "", component: () => import("pages/PageLogin.vue") }]
+    children: [{ path: "", component: () => import("pages/PageLogin.vue") }, { path: "signIn", component: () => import("pages/PageSignIn.vue") }]
   },
   {
-    path: "/allLists",
+    path: "/user",
     component: () => import("layouts/LayoutAllLists.vue"),
     children: [
       { path: "", name: "PageAllLists", component: () => import("pages/PageAllLists.vue") },
-      { path: "editList/:idList", name: "editList", component: () => import("pages/PageEditList.vue") }
+      { path: "editList/:idList", name: "editList", component: () => import("pages/PageEditList.vue") },
+      { path: "account", name: "account", component: () => import("pages/PageAccount.vue") }
     ]
   },
   {

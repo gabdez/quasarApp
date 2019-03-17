@@ -72,10 +72,10 @@ export default {
     methods: {
         createList() {
             this.list.id = this.$uuid.v1();
-            this.list.date = this.$store.getters["items/getDate"];
+            this.list.date = this.$store.getters["lists/getDate"];
             console.log(JSON.stringify(this.list));
-            this.$store.commit("items/addList", this.list);
-            LocalStorage.set("list_todo_market", this.$store.getters["items/getAllLists"]);
+            this.$store.commit("lists/addList", this.list);
+            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
             this.$router.go(-1);
         }
     }
