@@ -50,13 +50,14 @@ module.exports = function(ctx) {
         "QDialog",
         "QSelect",
         "QSpinner",
-        "QRadio"
+        "QRadio",
+        "QMenu"
       ],
 
-      directives: ["Ripple", "CloseDialog"],
+      directives: ["Ripple", "CloseDialog", "CloseMenu"],
 
       // Quasar plugins
-      plugins: ["LocalStorage", "Notify"],
+      plugins: ["LocalStorage", "Notify", "Loading"],
       config: {
         notify: {
           /* Notify defaults */

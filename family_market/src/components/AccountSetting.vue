@@ -1,15 +1,15 @@
 <template>
     <div>
         <h5 class="text-center text-weight-light text-uppercase text-white">Account settings</h5>
-        <q-input outlined color="light-blue-5" bg-color="white" v-model="user.username" stack-label label="username"/>
+        <q-input outlined color="light-blue-5" bg-color="white" v-model="user_.username" stack-label label="username"/>
         <br>
-        <q-input v-model="user.email" readonly color="light-blue-5" bg-color="white" label="email" filled/>
+        <q-input v-model="user_.email" readonly color="light-blue-5" bg-color="white" label="email" filled/>
         <q-select
             class="q-mt-sm"
             filled
-            v-model="user.color"
+            v-model="user_.color"
             color="white"
-            :style="{'background-color':user.color}"
+            :style="{'background-color':user_.color}"
             :options="arrayColors"
             label="your items color"
         >
@@ -49,16 +49,22 @@ export default {
     props: ["user"],
     data() {
         return {
-            arrayColors: ["#5271FF", "#26A69A", "#9C27B0", "#21BA45", "#C10015", "#31CCEC", "#F2C037", "#027BE3", "#000000", "#ffffff"]
+            arrayColors: ["#5271FF", "#26A69A", "#9C27B0", "#21BA45", "#C10015", "#31CCEC", "#F2C037", "#027BE3", "#000000", "#ffffff"],
+            user_: null
         };
     },
-    mounted() {
-        console.log("mounted");
-        console.log(this.user);
+    beforeMount() {
+        this.user_ = Object.assign({}, this.user);
     },
     methods: {
         updateAccount() {
-            this.$store.dispatch("users/updateUserFirebase");
+            var user = this.user_;
+            this.$store.dispatch("users/updateUserFirebase", {
+                username: user.username,
+                email: user.email,
+                color: user.color
+            });
+            this.$store.state.users.user = this.user_;
             this.$router.go(-1);
         }
     }

@@ -4,7 +4,22 @@
             <q-toolbar>
                 <q-toolbar-title class="text-center">Your todo-market lists</q-toolbar-title>
 
-                <q-btn flat round icon="account_circle" @click="$router.push('/user/account')"/>
+                <q-btn flat round icon="account_circle">
+                    <q-menu>
+                        <q-list style="min-width: 100px">
+                            <q-item v-ripple clickable v-close-menu>
+                                <q-item-section @click="$router.push('/user/account')">User settings</q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-menu>
+                                <q-item-section class="text-center" @click="logout">
+                                    <div>logout
+                                        <q-icon name="logout"></q-icon>
+                                    </div>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-menu>
+                </q-btn>
             </q-toolbar>
         </q-header>
         <Lists v-if="allLists.length >0 " :allLists="allLists"/>
@@ -27,6 +42,12 @@ import Lists from "../components/Lists.vue";
 export default {
     name: "PageAllLists",
     components: { Lists },
+    methods: {
+        logout() {
+            this.$store.dispatch("users/logout");
+            this.$router.push("/");
+        }
+    },
     computed: {
         allLists() {
             return this.$store.getters["lists/getAllLists"];

@@ -38,6 +38,20 @@ export function userLogin({ commit, dispatch }, { email, password }) {
   });
 }
 
+// function to know if user is already auth with "remember me" btn
+export function userIsLogin({ commit, dispatch }) {
+  return new Promise((resolve, reject) => {
+    console.log("hello");
+    var user = firebase.auth().currentUser;
+    console.log(firebase.auth());
+    if (user != null) {
+      resolve(user);
+    } else {
+      reject();
+    }
+  });
+}
+
 export function setUser({ state, commit }) {
   var db = firebase.firestore();
   var docRef = db.collection("Users").doc(state.uid);
@@ -73,20 +87,38 @@ export function createUserFirebase({}, { user, username }) {
     });
 }
 
-export function updateUserFirebase({ state }) {
+export function updateUserFirebase({ state }, { username, email, color }) {
+  console.log("in action");
   var db = firebase.firestore();
-  var data = state.user;
   db.collection("Users")
     .doc(state.uid)
     .set({
-      username: data.username,
-      email: data.email,
-      color: data.color
+      username: username,
+      email: email,
+      color: color
     })
     .then(function() {
       console.log("Document successfully written!");
     })
     .catch(function(error) {
       console.error("Error writing document: ", error);
+    });
+}
+export function logout({ commit }) {
+  firebase
+    .auth()
+    .signOut()
+    .then(function() {
+      // Sign-out successful.
+      console.log("logout succesfull");
+      commit("setUser", null);
+      commit("setUserUid", null);
+      commit("setIsAuthenticated", false);
+    })
+    .catch(function(error) {
+      // An error happened.
+      console.log("logout unsuccesfull");
+      commit("setUserUid", null);
+      commit("setIsAuthenticated", false);
     });
 }

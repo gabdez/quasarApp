@@ -19,6 +19,9 @@ export default {
     data() {
         return {};
     },
+    mounted() {
+        this.$q.loading.hide();
+    },
     methods: {}
 };
 </script>

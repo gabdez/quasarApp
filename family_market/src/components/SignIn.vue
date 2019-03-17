@@ -69,6 +69,8 @@ export default {
                         message: "Account created successfully!",
                         color: "green"
                     });
+                    let email = data.user.email;
+                    this.$q.localStorage.set("userEmail", email);
                     this.$router.push("/user");
                 })
                 .catch(err => {

@@ -28,35 +28,17 @@ export default {
             email: "",
             password: "",
             isPwd: true,
-            error: "rien",
             loading: false,
             errorMsg: "",
-            rememberMe: false
+            rememberMe: true
         };
     },
+    mounted() {
+        if (this.$q.localStorage.has("userEmail")) {
+            this.email = this.$q.localStorage.getItem("userEmail");
+        }
+    },
     methods: {
-        firebaseTest() {
-            var self = this;
-            var db = firebase.firestore();
-            db.collection("lists")
-                .doc("list4")
-                .set({
-                    type: "market"
-                })
-                .then(function() {
-                    self.error = "Document written with ID: ";
-                })
-                .catch(function() {
-                    self.error = "Error adding document:";
-                });
-            db.collection("lists")
-                .get()
-                .then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        console.log(`${doc.id} => ${doc.data()}`);
-                    });
-                });
-        },
         login() {
             this.errorMsg = "";
             this.loading = true;
@@ -67,6 +49,13 @@ export default {
                 })
                 .then(data => {
                     this.loading = false;
+                    if (this.rememberMe == true) {
+                        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                    } else {
+                        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+                    }
+                    let email = data.user.email;
+                    this.$q.localStorage.set("userEmail", email);
                     this.$router.push("/user");
                 })
                 .catch(err => {

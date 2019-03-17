@@ -39,7 +39,6 @@
             </q-chip>
         </div>
         <q-btn class="absolute-bottom-right q-ma-lg" round color="red" icon="add" @click="$router.push('/user/editList/new')"></q-btn>
-
         <q-dialog v-model="confirmDelete" persistent>
             <q-card>
                 <q-card-section class="row items-center">
