@@ -59,24 +59,35 @@ export default {
             list: {
                 id: null,
                 name: "",
-                creator: "gabriel",
+                creator: {},
                 type: "",
-                date: "21/02/19",
+                date: "",
                 description: "",
                 favorite: false,
                 counter: 1,
-                items: []
+                items: [],
+                users: []
             }
         };
     },
     methods: {
         createList() {
             this.list.id = this.$uuid.v1();
+            this.list.type = this.opt.value;
+            this.list.users.push(this.$store.state.users.uid);
+            this.list.creator.id = this.$store.state.users.uid;
+            this.list.creator.username = this.$store.state.users.user.username;
             this.list.date = this.$store.getters["lists/getDate"];
             console.log(JSON.stringify(this.list));
-            this.$store.commit("lists/addList", this.list);
-            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
-            this.$router.go(-1);
+            this.$store
+                .dispatch("lists/addList", this.list)
+                .then(data => {
+                    console.log(data);
+                    this.$router.go(-1);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 };

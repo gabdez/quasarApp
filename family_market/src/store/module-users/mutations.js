@@ -7,3 +7,6 @@ export function setIsAuthenticated(state, payload) {
 export function setUserUid(state, payload) {
   state.uid = payload;
 }
+export function setAppRunning(state, payload) {
+  state.appRunning = payload;
+}

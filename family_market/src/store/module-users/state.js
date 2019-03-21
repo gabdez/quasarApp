@@ -1,5 +1,6 @@
 export default {
   user: null,
   isAuthenticated: false,
-  uid: null
+  uid: null,
+  appRunning: false
 };

@@ -1,13 +1,13 @@
 <template>
     <q-list :style="styleList">
         <span class="listArticle">
-            <transition-group name="list">
-                <template v-for="item in items">
-                    <q-item :key="item.id" :class="{'list-item':true, 'checked':item.isCheck}" @click="item.isCheck = !item.isCheck">
+            <transition-group name="item">
+                <template v-for="(item, index) in items">
+                    <q-item :key="index" :class="{'list-item':true, 'checked':item.isCheck}" @click="item.isCheck = !item.isCheck">
                         <q-item-section>{{ item.name }}</q-item-section>
                         <q-icon style="text-decoration: none!important;" size="32px" @click.stop="deleteItem(item)" color="red-12" name="clear"/>
                     </q-item>
-                    <hr class="hr" :key="item.id+'-hr'">
+                    <hr class="hr" :key="index+'-hr'">
                 </template>
             </transition-group>
             <q-item v-if="items.length == 0" :key="'noArticle'">
@@ -53,12 +53,29 @@ export default {
             var list = this.list;
             var newItem = this.newItemName.trim();
             this.$store.commit("lists/addItem", { newItem, list });
-            this.newItemName = "";
             this.scrollToElement(document.getElementsByClassName("listArticle")[0]);
-            this.setLocalStorage();
+            //this.setLocalStorage();
+            this.$store
+                .dispatch("lists/addItem", { newItem, list })
+                .then(() => {
+                    console.log("item added!");
+                    this.newItemName = "";
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         },
         deleteItem(item) {
             var list = this.list;
+            this.$store
+                .dispatch("lists/removeItem", { item, list })
+                .then(() => {
+                    console.log("item added!");
+                    this.newItemName = "";
+                })
+                .catch(err => {
+                    console.log(err);
+                });
             this.$store.commit("lists/deleteItem", { item, list });
             this.setLocalStorage();
         },
@@ -134,11 +151,11 @@ export default {
     background-color: white;
 }
 
-.list-enter-active, .list-leave-active {
+.item-enter-active, .item-leave-active {
     transition: all 0.3s;
 }
 
-.list-enter, .list-leave-to { /* .list-leave-active below version 2.1.8 */
+.item-enter, .item-leave-to { /* .item-leave-active below version 2.1.8 */
     opacity: 0;
     transform: translateX(30px);
 }

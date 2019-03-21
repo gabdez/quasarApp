@@ -22,7 +22,7 @@
         <span class="row justify-center">
             <q-btn
                 :loading="submitting"
-                :disable="email == '' || password == '' ? true : false "
+                :disable="email == '' || password == '' || username == '' ? true : false "
                 color="light-blue-5"
                 :ripple="false"
                 label="Sign in"

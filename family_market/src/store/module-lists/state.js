@@ -1,3 +1,6 @@
 export default {
-  list_todo_market: []
+  list_todo_market: [],
+  loaded: false,
+  idListSelected: null,
+  idListFirebase: null
 };

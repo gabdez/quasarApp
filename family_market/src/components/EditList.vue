@@ -9,6 +9,7 @@
         <q-input v-model="list.description" color="light-blue-5" bg-color="white" label="Description" filled type="textarea"/>
         <br>
         <div class="flex flex-center">
+            <q-btn class="q-mr-sm" unelevated outline color="white" label="cancel" @click="$router.go(-1);"/>
             <q-btn unelevated color="light-blue-5" label="finish" @click="endEdit"/>
         </div>
     </div>
@@ -25,8 +26,14 @@ export default {
     components: {},
     methods: {
         endEdit() {
-            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
-            this.$router.go(-1);
+            this.$store
+                .dispatch("lists/setList", this.list)
+                .then(() => {
+                    this.$router.go(-1);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 };

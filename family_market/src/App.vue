@@ -14,18 +14,23 @@ export default {
     data() {
         return {};
     },
-    beforeCreate() {
+    created() {},
+    mounted() {
         this.$q.loading.show({
             delay: 400 // ms
         });
         firebase.auth().onAuthStateChanged(user => {
+            console.log("there is a call");
+            console.log(user);
             if (user) {
-                console.log(user);
+                console.log("there is a user");
                 this.$store.commit("users/setUserUid", user.uid);
                 this.$store.commit("users/setIsAuthenticated", true);
                 this.$store.dispatch("users/setUser");
+                this.$store.dispatch("lists/setAllLists", user.uid);
                 this.$router.push("/user");
             } else {
+                console.log("there is no user");
                 this.$q.loading.hide();
                 this.$store.commit("users/setUserUid", null);
                 this.$store.commit("users/setUser", null);
@@ -33,14 +38,6 @@ export default {
                 this.$router.push("/");
             }
         });
-    },
-    mounted() {
-        if (!LocalStorage.isEmpty() && LocalStorage.has("list_todo_market") && LocalStorage.getItem("list_todo_market") != undefined) {
-            /*             console.log("have items save");
-            console.log(LocalStorage.getAll());
-            console.log(this.$store.getters["lists/getAllLists"]); */
-            this.$store.commit("lists/setAllLists", LocalStorage.getItem("list_todo_market"));
-        }
     }
 };
 </script>

@@ -1,14 +1,14 @@
 <template>
-    <q-page class="fullscreen">
-        <q-header>
+    <q-page class>
+        <q-header style="z-index: 10000;">
             <q-toolbar>
                 <q-toolbar-title class="text-center">Your todo-market lists</q-toolbar-title>
 
                 <q-btn flat round icon="account_circle">
                     <q-menu>
-                        <q-list style="min-width: 100px">
+                        <q-list style="min-width: 150px">
                             <q-item v-ripple clickable v-close-menu>
-                                <q-item-section @click="$router.push('/user/account')">User settings</q-item-section>
+                                <q-item-section class="text-center" @click="$router.push('/user/account')">User settings</q-item-section>
                             </q-item>
                             <q-item clickable v-close-menu>
                                 <q-item-section class="text-center" @click="logout">
@@ -22,8 +22,8 @@
                 </q-btn>
             </q-toolbar>
         </q-header>
-        <Lists v-if="allLists.length >0 " :allLists="allLists"/>
-        <span v-else>
+        <Lists v-if="allLists.length >0" :allLists="allLists"/>
+        <span v-else-if="loaded == true && allLists.length == 0">
             <div class="flex flex-center fullscreen items-center">
                 <div class="flex flex-center">
                     <h5 class="text-weight-thin q-ma-sm text-center text-white">create your first list right now!</h5>
@@ -38,19 +38,29 @@
 </style>
 
 <script>
+import { Loading } from "quasar";
 import Lists from "../components/Lists.vue";
 export default {
     name: "PageAllLists",
     components: { Lists },
+    data() {
+        return {};
+    },
+    mounted() {},
     methods: {
         logout() {
             this.$store.dispatch("users/logout");
+            this.$store.commit("lists/setAllLists", []);
+            this.$store.commit("lists/setLoaded", false);
             this.$router.push("/");
         }
     },
     computed: {
         allLists() {
             return this.$store.getters["lists/getAllLists"];
+        },
+        loaded() {
+            return this.$store.getters["lists/getLoaded"];
         }
     }
 };

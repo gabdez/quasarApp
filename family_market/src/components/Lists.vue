@@ -3,12 +3,12 @@
         <!-- 
         <h5 class="text-weight-thin q-pa-md q-ma-none text-center text-white">Your todo-market lists</h5>-->
         <template>
-            <q-tab-panels swipeable :value="chipSelected" animated transition-prev="slide-right" transition-next="slide-left">
+            <q-tab-panels swipeable :value="listSelected.id" animated transition-prev="slide-right" transition-next="slide-left">
                 <q-tab-panel v-for="list in allLists" :key="list.id" :name="list.id">
-                    <q-card v-ripple class="my-card bg-light-blue-5 text-white q-ma-sm" @click="$router.push('/'+list.id+'/Items')">
+                    <q-card v-ripple class="my-card bg-light-blue-5 text-white q-ma-sm" @click="goListItems()">
                         <q-card-section>
                             <div class="text-h6 text-center text-weight-light text-uppercase">{{list.name}}</div>
-                            <div class="text-subtitle1 text-weight-light">created by {{list.creator}}</div>
+                            <div class="text-subtitle1 text-weight-light">created by {{list.creator.username}}</div>
                             <div class="text-subtitle1 text-weight-light">
                                 type: {{list.type}} list
                                 <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
@@ -30,7 +30,7 @@
             </q-tab-panels>
         </template>
         <div class="container">
-            <q-chip v-for="list in allLists" :key="list.id" :selected="chipSelected == list.id" @click="selectChip(list.id)">
+            <q-chip v-for="list in allLists" :key="list.id" :selected="listSelected.id == list.id" @click="selectChip(list.id)">
                 <q-avatar color="red" text-color="white">
                     <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
                 </q-avatar>
@@ -43,7 +43,7 @@
             <q-card>
                 <q-card-section class="row items-center">
                     <q-avatar icon="warning" color="red" text-color="white"/>
-                    <span class="q-ml-sm">You definitively want to delete the list {{listSelected.name}}?</span>
+                    <span class="q-ml-sm">You definitively want to delete the list?</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -62,32 +62,38 @@ export default {
     props: ["allLists"],
     data() {
         return {
-            chipSelected: null,
             confirmDelete: false
         };
     },
-    mounted() {
-        this.chipSelected = this.listSelected.id;
-    },
+    mounted() {},
     watch: {
         listSelected: function() {
-            this.chipSelected = this.listSelected.id;
+            //if (this.listSelected) this.chipSelected = this.listSelected.id;
         }
     },
     methods: {
         selectChip(id) {
-            this.chipSelected = id;
+            this.$store.commit("lists/setIdListSelected", id);
         },
         deleteList() {
-            var list = this.listSelected;
-            this.$store.commit("lists/deleteList", list);
-            LocalStorage.set("list_todo_market", this.$store.getters["lists/getAllLists"]);
-            this.chipSelected = null;
+            var list = Object.assign({}, this.listSelected);
+            this.$store
+                .dispatch("lists/deleteList", list)
+                .then(() => {
+                    console.log("document deleted");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        goListItems() {
+            this.$store.commit("lists/setIdListSelected", this.listSelected.id);
+            this.$router.push("/" + this.listSelected.id + "/Items");
         }
     },
     computed: {
         listSelected() {
-            return this.$store.getters["lists/getList"](this.chipSelected);
+            return this.$store.getters["lists/getListSelected"];
         }
     }
 };

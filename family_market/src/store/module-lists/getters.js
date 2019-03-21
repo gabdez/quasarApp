@@ -1,11 +1,19 @@
 export function getAllLists(state) {
   return state.list_todo_market;
 }
+export function getLoaded(state) {
+  return state.loaded;
+}
 export function getList(state) {
   return function(id_list) {
     if (id_list) return state.list_todo_market.filter(list => list.id == id_list)[0];
     else return state.list_todo_market[0];
   };
+}
+export function getListSelected(state) {
+  let id_list = state.idListSelected;
+  if (id_list) return state.list_todo_market.filter(list => list.id == id_list)[0];
+  else return state.list_todo_market[0];
 }
 export function getAllItems(state) {
   return function(id_list) {
