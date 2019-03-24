@@ -85,7 +85,7 @@ export default {
         checkItem(item) {
             item.isCheck = !item.isCheck;
             var idList = this.list.id;
-            var items = this.items;
+            var items = this.list.items;
             this.$store
                 .dispatch("lists/updateItems", { idList, items })
                 .then(() => {})
