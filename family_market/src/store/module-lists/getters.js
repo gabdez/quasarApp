@@ -25,6 +25,12 @@ export function getAllUncheckedItems(state, getters) {
     return getters.getAllItems(id_list).filter(item => item.isCheck == false);
   };
 }
+export function getAllCheckedItems(state, getters) {
+  return function(id_list) {
+    console.log(getters.getAllItems(id_list).filter(item => item.isCheck == true));
+    return getters.getAllItems(id_list).filter(item => item.isCheck == true);
+  };
+}
 export function getDate(state) {
   var today = new Date();
   var dd = today.getDate();

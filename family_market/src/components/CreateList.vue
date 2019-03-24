@@ -46,7 +46,6 @@
 </style>
 
 <script>
-import { uuid } from "vue-uuid";
 import { LocalStorage } from "quasar";
 export default {
     name: "CreateList",
@@ -72,7 +71,6 @@ export default {
     },
     methods: {
         createList() {
-            this.list.id = this.$uuid.v1();
             this.list.type = this.opt.value;
             this.list.users.push(this.$store.state.users.uid);
             this.list.creator.id = this.$store.state.users.uid;

@@ -30,7 +30,7 @@
             </q-tab-panels>
         </template>
         <div class="container">
-            <q-chip v-for="list in allLists" :key="list.id" :selected="listSelected.id == list.id" @click="selectChip(list.id)">
+            <q-chip class="bg-white" v-for="list in allLists" :key="list.id" :selected="listSelected.id == list.id" @click="selectChip(list.id)">
                 <q-avatar color="red" text-color="white">
                     <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
                 </q-avatar>
@@ -123,7 +123,7 @@ export default {
 
 .q-chip--selected {
     color: white;
-    background-color: $light-blue-5;
+    background-color: $light-blue-5 !important;
     border: 1px solid white;
 }
 

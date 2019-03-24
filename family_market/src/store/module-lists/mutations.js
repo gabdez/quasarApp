@@ -1,13 +1,14 @@
 /******** Lists ********/
 export function addList(state, list) {
-  console.log(list);
-  state.list_todo_market.splice(state.list_todo_market.length, 0, list);
+  var l = list.data();
+  l.id = list.id;
+  state.list_todo_market.splice(state.list_todo_market.length, 0, l);
 }
 export function deleteList(state, list) {
-  let listToReplace = state.list_todo_market.filter(function(obj) {
+  let listToRemove = state.list_todo_market.filter(function(obj) {
     return obj.id === list.id;
   })[0];
-  let index = state.list_todo_market.indexOf(listToReplace);
+  let index = state.list_todo_market.indexOf(listToRemove);
   state.list_todo_market.splice(index, 1);
 }
 export function setList(state, list) {
@@ -29,7 +30,7 @@ export function setAllLists(state, allLists) {
 
 /****** Items ******/
 export function addItem(state, { newItem, list }) {
-  list.items.splice(list.items.length, 0, { id: list.counter++, name: newItem, isCheck: false });
+  list.items.splice(list.items.length, 0, newItem);
 }
 export function deleteItem(state, { item, list }) {
   let index = list.items.indexOf(item);

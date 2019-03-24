@@ -2,12 +2,12 @@
     <q-list :style="styleList">
         <span class="listArticle">
             <transition-group name="item">
-                <template v-for="(item, index) in items">
-                    <q-item :key="index" :class="{'list-item':true, 'checked':item.isCheck}" @click="item.isCheck = !item.isCheck">
+                <template v-for="item in items">
+                    <q-item :key="item.id" :class="{'list-item':true, 'checked':item.isCheck}" @click="checkItem(item)">
                         <q-item-section>{{ item.name }}</q-item-section>
                         <q-icon style="text-decoration: none!important;" size="32px" @click.stop="deleteItem(item)" color="red-12" name="clear"/>
                     </q-item>
-                    <hr class="hr" :key="index+'-hr'">
+                    <hr class="hr" :key="item.id+'-hr'">
                 </template>
             </transition-group>
             <q-item v-if="items.length == 0" :key="'noArticle'">
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { uuid } from "vue-uuid";
 import { scroll } from "quasar";
 import { LocalStorage } from "quasar";
 const { getScrollTarget, getScrollHeight, setScrollPosition } = scroll;
@@ -51,12 +52,13 @@ export default {
         addItem() {
             this.$refs.name_article.focus();
             var list = this.list;
-            var newItem = this.newItemName.trim();
-            this.$store.commit("lists/addItem", { newItem, list });
+            let uid = this.$uuid.v1();
+            var itemName = this.newItemName.trim();
+            var item = { id: uid, name: itemName, isCheck: false };
             this.scrollToElement(document.getElementsByClassName("listArticle")[0]);
             //this.setLocalStorage();
             this.$store
-                .dispatch("lists/addItem", { newItem, list })
+                .dispatch("lists/addItem", { item, list })
                 .then(() => {
                     console.log("item added!");
                     this.newItemName = "";
@@ -64,28 +66,60 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
+            //this.$store.commit("lists/addItem", { item, list });
         },
         deleteItem(item) {
             var list = this.list;
             this.$store
                 .dispatch("lists/removeItem", { item, list })
                 .then(() => {
-                    console.log("item added!");
+                    console.log("item deleted!");
                     this.newItemName = "";
                 })
                 .catch(err => {
                     console.log(err);
                 });
-            this.$store.commit("lists/deleteItem", { item, list });
+            //this.$store.commit("lists/deleteItem", { item, list });
             this.setLocalStorage();
         },
+        checkItem(item) {
+            item.isCheck = !item.isCheck;
+            var idList = this.list.id;
+            var items = this.items;
+            this.$store
+                .dispatch("lists/updateItems", { idList, items })
+                .then(() => {})
+                .catch(err => {
+                    console.log(err);
+                });
+        },
         clearCompleted() {
-            this.$store.commit("lists/clearCompleted", this.list);
+            var itemsCompleted = this.$store.getters["lists/getAllUncheckedItems"](this.list.id);
+            console.log(itemsCompleted);
+            var idList = this.list.id;
+            this.$store
+                .dispatch("lists/clearCompletedItem", { idList, itemsCompleted })
+                .then(() => {
+                    this.newItemName = "";
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            //this.$store.commit("lists/clearCompleted", this.list);
             this.setLocalStorage();
         },
         clearAll() {
-            this.$store.commit("lists/deleteAll", this.list);
-            this.setLocalStorage();
+            var idList = this.list.id;
+            this.$store
+                .dispatch("lists/clearAllItem", idList)
+                .then(() => {
+                    console.log("all item clear");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            //this.$store.commit("lists/deleteAll", this.list);
+            //this.setLocalStorage();
         },
         scrollToElement(el) {
             let target = getScrollTarget(el);
