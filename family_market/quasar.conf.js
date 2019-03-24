@@ -54,7 +54,7 @@ module.exports = function(ctx) {
         "QMenu"
       ],
 
-      directives: ["Ripple", "CloseDialog", "CloseMenu"],
+      directives: ["Ripple", "CloseDialog", "CloseMenu", "TouchSwipe"],
 
       // Quasar plugins
       plugins: ["LocalStorage", "Notify", "Loading"],

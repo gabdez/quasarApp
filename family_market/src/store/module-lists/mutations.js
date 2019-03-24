@@ -15,8 +15,10 @@ export function setList(state, list) {
   let listToReplace = state.list_todo_market.filter(function(obj) {
     return obj.id === list.id;
   })[0];
+  var l = list.data();
+  l.id = list.id;
   let index = state.list_todo_market.indexOf(listToReplace);
-  state.list_todo_market.splice(index, 1, list);
+  state.list_todo_market.splice(index, 1, l);
 }
 export function setLoaded(state, payload) {
   state.loaded = payload;

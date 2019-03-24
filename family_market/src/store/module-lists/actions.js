@@ -62,7 +62,7 @@ export function setAllLists({ state, commit }, uid) {
         }
         if (change.type === "modified") {
           console.log("Modified list: ", change.doc.data());
-          commit("setList", change.doc.data());
+          commit("setList", change.doc);
         }
         if (change.type === "removed") {
           console.log("Removed list: ", change.doc.data());
@@ -72,6 +72,19 @@ export function setAllLists({ state, commit }, uid) {
       });
       commit("setLoaded", true);
     });
+}
+
+export function swipeList(context, direction) {
+  var list = context.getters["getList"](context.state.idListSelected);
+  let index = context.state.list_todo_market.indexOf(list);
+  let maxLength = context.state.list_todo_market.length;
+  var newIndex = 0;
+  if (direction == "left") {
+    newIndex = index == maxLength - 1 ? 0 : index + 1;
+  } else if (direction == "right") {
+    newIndex = index == 0 ? maxLength - 1 : index - 1;
+  }
+  context.commit("setIdListSelected", context.state.list_todo_market[newIndex].id);
 }
 
 // items

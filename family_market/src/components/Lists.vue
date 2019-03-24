@@ -3,15 +3,29 @@
         <!-- 
         <h5 class="text-weight-thin q-pa-md q-ma-none text-center text-white">Your todo-market lists</h5>-->
         <template>
-            <q-tab-panels swipeable :value="listSelected.id" animated transition-prev="slide-right" transition-next="slide-left">
+            <q-tab-panels
+                swipeable
+                :value="listSelected.id"
+                animated
+                transition-prev="slide-right"
+                transition-next="slide-left"
+                v-touch-swipe.mouse.right.left="handleSwipe"
+            >
                 <q-tab-panel v-for="list in allLists" :key="list.id" :name="list.id">
                     <q-card v-ripple class="my-card bg-light-blue-5 text-white q-ma-sm" @click="goListItems()">
                         <q-card-section>
                             <div class="text-h6 text-center text-weight-light text-uppercase">{{list.name}}</div>
-                            <div class="text-subtitle1 text-weight-light">created by {{list.creator.username}}</div>
+                            <div class="text-subtitle1 text-weight-light">
+                                created by
+                                <q-chip color="white">{{list.creator.username}}</q-chip>
+                            </div>
                             <div class="text-subtitle1 text-weight-light">
                                 type: {{list.type}} list
                                 <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
+                            </div>
+                            <div class="text-subtitle1 text-weight-light">
+                                all users:
+                                <q-chip v-for="user in list.users" :key="user" color="white">{{user}}</q-chip>
                             </div>
                         </q-card-section>
                         <q-card-section class="text-weight-light">{{list.description}}</q-card-section>
@@ -89,6 +103,18 @@ export default {
         goListItems() {
             this.$store.commit("lists/setIdListSelected", this.listSelected.id);
             this.$router.push("/" + this.listSelected.id + "/Items");
+        },
+        handleSwipe({ evt, ...info }) {
+            if (info.distance.y > 0) {
+                this.$store
+                    .dispatch("lists/swipeList", info.direction)
+                    .then(() => {
+                        console.log("swipe successfull");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
         }
     },
     computed: {
