@@ -31,6 +31,14 @@ export function getAllCheckedItems(state, getters) {
     return getters.getAllItems(id_list).filter(item => item.isCheck == true);
   };
 }
+
+export function getAllUsersIds(state, getters) {
+  return function(idList) {
+    return getters.getList(idList).users;
+  };
+}
+
+// date
 export function getDate(state) {
   var today = new Date();
   var dd = today.getDate();

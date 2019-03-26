@@ -26,7 +26,7 @@
             <span class="text-subtitle2" style="min-width: 100px;">Avatar</span>
             <div class="container">
                 <q-avatar v-for="(url, index) in avatarUrls" :key="index" @click="changeAvatar(url)" class="q-mr-sm">
-                    <img :class="{'borderAvatar': url == user_.url}" :src="'../assets/avatars/'+url">
+                    <img :class="{'borderAvatar': url == user_.url}" :src="'statics/avatars/'+url">
                     <q-badge v-if="url == user_.url" color="#0084ff" floating>
                         <q-icon name="ion-ios-checkmark" color="white"/>
                     </q-badge>

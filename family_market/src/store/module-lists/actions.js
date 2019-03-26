@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import Vue from "vue";
 
 export function addList({ state, commit }, list) {
   return new Promise((resolve, reject) => {
@@ -50,7 +51,7 @@ export function setList({ state, commit }, list) {
       });
   });
 }
-export function setAllLists({ state, commit }, uid) {
+export function setAllLists({ state, commit, getters, dispatch }, uid) {
   var db = firebase.firestore();
   db.collection("Lists")
     .where("users", "array-contains", uid)
@@ -59,32 +60,46 @@ export function setAllLists({ state, commit }, uid) {
         if (change.type === "added") {
           console.log("New list: ", change.doc.data());
           commit("addList", change.doc);
+          dispatch("setUsersInfo", change.doc.id);
         }
         if (change.type === "modified") {
           console.log("Modified list: ", change.doc.data());
           commit("setList", change.doc);
+          dispatch("setUsersInfo", change.doc.id);
         }
         if (change.type === "removed") {
           console.log("Removed list: ", change.doc.data());
           state.idListSelected = null;
           commit("deleteList", change.doc);
+          //dispatch();
         }
       });
       commit("setLoaded", true);
     });
 }
 
-export function swipeList(context, direction) {
-  var list = context.getters["getList"](context.state.idListSelected);
-  let index = context.state.list_todo_market.indexOf(list);
-  let maxLength = context.state.list_todo_market.length;
-  var newIndex = 0;
-  if (direction == "left") {
-    newIndex = index == maxLength - 1 ? 0 : index + 1;
-  } else if (direction == "right") {
-    newIndex = index == 0 ? maxLength - 1 : index - 1;
+export function setUsersInfo({ state, getters }, listId) {
+  var usersIds = getters.getAllUsersIds(listId);
+  var db = firebase.firestore();
+  var arrayPromises = [];
+  for (let i in usersIds) {
+    arrayPromises.push(
+      db
+        .collection("Users")
+        .doc(usersIds[i])
+        .get()
+    );
   }
-  context.commit("setIdListSelected", context.state.list_todo_market[newIndex].id);
+  Promise.all(arrayPromises).then(function(values) {
+    var infos = [];
+    for (let i in values) {
+      if (values[i].exists == true) {
+        infos.push(values[i].data());
+      }
+    }
+    Vue.set(state.usersInfo, listId, infos);
+    console.log(state.usersInfo);
+  });
 }
 
 // items

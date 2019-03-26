@@ -9,7 +9,7 @@
             </q-toolbar>
         </q-header>
         <CreateList class="q-mt-md" v-if="$route.params.idList == 'new'"/>
-        <EditList class="q-mt-md" v-else :usersInfo="allUsers" :list="list"/>
+        <EditList class="q-mt-md" v-else :usersInfo="usersInfo" :list="list"/>
     </q-page>
 </template>
 
@@ -23,31 +23,21 @@ export default {
     name: "PageEditList",
     components: { EditList, CreateList },
     data() {
-        return {
-            allUsers: []
-        };
+        return {};
     },
-    mounted() {
-        if (this.$route.params.idList != "new") this.getUserInfo();
-    },
-    methods: {
-        getUserInfo() {
-            for (const id in this.list.users) {
-                this.$store
-                    .dispatch("users/getUsersInfo", this.list.users[id])
-                    .then(usersInfo => {
-                        console.log(usersInfo);
-                        this.allUsers.push(usersInfo);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
+    watch: {
+        list(newVal) {
+            if (this.$route.params.idList != "new" && newVal == undefined) this.$router.go(-1);
         }
     },
+    mounted() {},
+    methods: {},
     computed: {
         list() {
             return this.$route.params.idList == "new" ? {} : this.$store.getters["lists/getList"](this.$route.params.idList);
+        },
+        usersInfo() {
+            return this.$store.state.lists.usersInfo[this.list.id];
         }
     }
 };

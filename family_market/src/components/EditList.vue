@@ -1,9 +1,5 @@
 <template>
     <div>
-        <!-- <h5 class="text-center text-weight-light text-uppercase text-white">
-            Edit {{list.name}}
-            <q-icon name="star" :color="list.favorite ? 'yellow': ''" @click="list.favorite = !list.favorite"></q-icon>
-        </h5>-->
         <q-input filled bg-color="white" v-model="list_.name" stack-label label="List name"/>
         <br>
         <q-input v-model="list_.description" bg-color="white" label="Description" filled type="textarea"/>
@@ -15,8 +11,6 @@
                 <q-card flat class="cardUser cardAddUser">
                     <q-card-section align="center">
                         <q-btn outline color="white" label icon="ion-ios-person-add"/>
-                        <!-- 
-                        <q-icon name="ion-ios-person-add" outline size="80px" color="red"/>-->
                         <div class="text-white">Add new user</div>
                     </q-card-section>
                 </q-card>
@@ -25,7 +19,7 @@
                 <q-card v-for="user in usersInfo" :key="user.email" flat class="cardUser" :class="{'bgMyself': myUser.username == user.username}">
                     <q-card-section align="center">
                         <q-avatar class="flex-center q-mr-sm">
-                            <img :src="'../assets/avatars/'+ user.url">
+                            <img :src="'statics/avatars/'+ user.url">
                             <q-badge v-if="myUser.username == user.username" color="white" class="text-black" floating>Me</q-badge>
                         </q-avatar>
                     </q-card-section>
@@ -41,36 +35,6 @@
         </div>
     </div>
 </template>
-
-<style scoped>
-.container {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-.cardUser {
-    background-color: rgba(251, 251, 251, 1);
-    border-radius: 10%;
-    min-width: 115px;
-    max-width: 115px;
-    min-height: 175px;
-    margin-right: 10px;
-}
-.cardAddUser {
-    display: flex;
-    align-items: center;
-    background-color: #f44336;
-}
-.bgMyself {
-    background-color: #2196f3;
-    color: white;
-}
-.bgMyself img {
-    border: solid 2px white;
-}
-</style>
 
 <script>
 import { LocalStorage } from "quasar";
@@ -105,3 +69,33 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.cardUser {
+    background-color: rgba(251, 251, 251, 1);
+    border-radius: 10%;
+    min-width: 115px;
+    max-width: 115px;
+    min-height: 175px;
+    margin-right: 10px;
+}
+.cardAddUser {
+    display: flex;
+    align-items: center;
+    background-color: #f44336;
+}
+.bgMyself {
+    background-color: #2196f3;
+    color: white;
+}
+.bgMyself img {
+    border: solid 2px white;
+}
+</style>
