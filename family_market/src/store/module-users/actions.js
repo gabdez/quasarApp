@@ -1,6 +1,6 @@
 import firebase from "firebase";
 
-export function userJoin({ commit, dispatch }, { email, password, username }) {
+export function userJoin({ commit, dispatch }, { email, password, username, url }) {
   return new Promise((resolve, reject) => {
     firebase
       .auth()
@@ -8,7 +8,7 @@ export function userJoin({ commit, dispatch }, { email, password, username }) {
       .then(user => {
         commit("setUserUid", user.user.uid);
         commit("setIsAuthenticated", true);
-        dispatch("createUserFirebase", { user, username });
+        dispatch("createUserFirebase", { user, username, url });
         dispatch("setUser");
         resolve(user);
       })
@@ -70,14 +70,15 @@ export function setUser({ state, commit }) {
     });
 }
 
-export function createUserFirebase({}, { user, username }) {
+export function createUserFirebase({}, { user, username, url }) {
   var db = firebase.firestore();
   db.collection("Users")
     .doc(user.user.uid)
     .set({
       username: username != "" ? username : "anonymous",
       email: user.user.email,
-      color: "#5271FF"
+      color: "#5271FF",
+      url: url
     })
     .then(function() {
       console.log("Document successfully written!");
@@ -87,16 +88,12 @@ export function createUserFirebase({}, { user, username }) {
     });
 }
 
-export function updateUserFirebase({ state }, { username, email, color }) {
+export function updateUserFirebase({ state }, user) {
   console.log("in action");
   var db = firebase.firestore();
   db.collection("Users")
     .doc(state.uid)
-    .set({
-      username: username,
-      email: email,
-      color: color
-    })
+    .set(user)
     .then(function() {
       console.log("Document successfully written!");
     })
@@ -104,6 +101,27 @@ export function updateUserFirebase({ state }, { username, email, color }) {
       console.error("Error writing document: ", error);
     });
 }
+export function getUsersInfo({ state }, userId) {
+  return new Promise((resolve, reject) => {
+    var db = firebase.firestore();
+    db.collection("Users")
+      .doc(userId)
+      .get()
+      .then(function(doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          resolve(doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
+  });
+}
+
 export function logout({ commit }) {
   firebase
     .auth()

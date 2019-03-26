@@ -1,8 +1,10 @@
 <template>
     <div>
-        <h5 class="text-center text-weight-light text-uppercase text-white">new List
+        <!-- 
+        <h5 class="text-center text-weight-light text-uppercase text-white">
+            new List
             <q-icon name="star" :color="list.favorite ? 'yellow': ''" @click="list.favorite = !list.favorite"></q-icon>
-        </h5>
+        </h5>-->
         <q-input
             outlined
             bottom-slots
@@ -36,7 +38,6 @@
         </q-select>
         <br>
         <div class="flex flex-center">
-            <q-btn class="q-mr-sm" unelevated outline color="white" label="cancel" @click="$router.go(-1);"/>
             <q-btn :disabled="list.name == ''" unelevated color="red" label="let's create" @click="createList"/>
         </div>
     </div>
@@ -56,7 +57,6 @@ export default {
             options: [{ label: "todo", value: "todo", icon: "list" }, { label: "market", value: "market", icon: "shopping_cart" }],
             opt: { label: "market", value: "market", icon: "shopping_cart" },
             list: {
-                id: null,
                 name: "",
                 creator: {},
                 type: "",

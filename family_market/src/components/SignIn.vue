@@ -1,6 +1,5 @@
 <template>
     <div style="padding-bottom: 100px; width:90%;">
-        <h5 class="text-center text-uppercase text-white q-ma-sm">Sign in</h5>
         <div>
             <q-input outlined color="light-blue-5" bg-color="white" v-model="email" placeholder="email"/>
             <br>
@@ -60,7 +59,8 @@ export default {
                 .dispatch("users/userJoin", {
                     email: this.email,
                     password: this.password,
-                    username: this.username
+                    username: this.username,
+                    url: "userM.png"
                 })
                 .then(data => {
                     console.log(data);

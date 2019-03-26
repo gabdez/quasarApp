@@ -7,7 +7,7 @@
                         <q-item-section>{{ item.name }}</q-item-section>
                         <q-icon style="text-decoration: none!important;" size="32px" @click.stop="deleteItem(item)" color="red-12" name="clear"/>
                     </q-item>
-                    <hr class="hr" :key="item.id+'-hr'">
+                    <hr class="hr q-ma-none" :key="item.id+'-hr'">
                 </template>
             </transition-group>
             <q-item v-if="items.length == 0" :key="'noArticle'">
@@ -164,12 +164,6 @@ export default {
 
 .checked .q-item__section {
     text-decoration: line-through !important;
-}
-
-.hr {
-    padding: 0;
-    margin: 0;
-    border: white solid 1px;
 }
 
 .btn_list {

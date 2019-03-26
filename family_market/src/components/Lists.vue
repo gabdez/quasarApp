@@ -1,9 +1,9 @@
 <template>
-    <div class="q-pt-xl q-px-sm">
+    <div class="q-px-sm">
         <!-- 
         <h5 class="text-weight-thin q-pa-md q-ma-none text-center text-white">Your todo-market lists</h5>-->
         <template>
-            <q-tab-panels
+            <!-- <q-tab-panels
                 swipeable
                 :value="listSelected.id"
                 animated
@@ -11,39 +11,47 @@
                 transition-next="slide-left"
                 v-touch-swipe.mouse.right.left="handleSwipe"
             >
-                <q-tab-panel v-for="list in allLists" :key="list.id" :name="list.id">
-                    <q-card v-ripple class="my-card bg-light-blue-5 text-white q-ma-sm" @click="goListItems()">
-                        <q-card-section>
-                            <div class="text-h6 text-center text-weight-light text-uppercase">{{list.name}}</div>
-                            <div class="text-subtitle1 text-weight-light">
-                                created by
-                                <q-chip color="white">{{list.creator.username}}</q-chip>
-                            </div>
-                            <div class="text-subtitle1 text-weight-light">
-                                type: {{list.type}} list
-                                <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
-                            </div>
-                            <div class="text-subtitle1 text-weight-light">
-                                all users:
-                                <q-chip v-for="user in list.users" :key="user" color="white">{{user}}</q-chip>
-                            </div>
-                        </q-card-section>
-                        <q-card-section class="text-weight-light">{{list.description}}</q-card-section>
-                        <q-separator dark/>
-                        <q-card-actions class="flex-center">
-                            <span class="float-right">
-                                <q-btn icon="delete_forever" color="negative" @click.stop="confirmDelete = true"></q-btn>
-                                <q-btn class="q-mx-sm" icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
-                                <q-btn outline @click.stop="list.favorite = !list.favorite" :color="list.favorite == true ? 'yellow': 'white'">
-                                    <q-icon name="star"></q-icon>
-                                </q-btn>
-                            </span>
-                        </q-card-actions>
-                    </q-card>
-                </q-tab-panel>
-            </q-tab-panels>
+            <q-tab-panel v-for="list in allLists" :key="list.id" :name="list.id">-->
+            <q-card
+                v-for="list in allLists"
+                :key="list.id"
+                :name="list.id"
+                v-ripple
+                class="my-card text-white q-ma-lg shadow-8"
+                @click="goListItems()"
+                :style="{background: styleCards}"
+            >
+                <q-card-section>
+                    <div class="text-h6 text-center text-weight-light text-uppercase">{{list.name}}</div>
+                    <!-- <div class="text-subtitle1 text-weight-light">
+                        created by
+                        <q-chip color="white">{{list.creator.username}}</q-chip>
+                    </div>-->
+                    <!-- <div class="text-subtitle1 text-weight-light">
+                        type: {{list.type}} list
+                        <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
+                    </div>-->
+                    <div class="text-subtitle1 text-weight-light" v-if="allUsers.length > 0">
+                        Users:
+                        <q-chip v-for="(user, index) in allUsers" :key="index" color="white">{{user.username}}</q-chip>
+                    </div>
+                </q-card-section>
+                <q-card-section class="text-weight-light">{{list.description}}</q-card-section>
+                <q-separator dark/>
+                <q-card-actions class="flex-center">
+                    <span class="float-right">
+                        <q-btn icon="delete_forever" color="negative" @click.stop="confirmDelete = true"></q-btn>
+                        <q-btn class="q-mx-sm" icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
+                        <q-btn outline @click.stop="list.favorite = !list.favorite" :color="list.favorite == true ? 'yellow': 'white'">
+                            <q-icon name="star"></q-icon>
+                        </q-btn>
+                    </span>
+                </q-card-actions>
+            </q-card>
+            <!-- </q-tab-panel>
+            </q-tab-panels>-->
         </template>
-        <div class="container">
+        <!-- <div class="container">
             <q-chip class="bg-white" v-for="list in allLists" :key="list.id" :selected="listSelected.id == list.id" @click="selectChip(list.id)">
                 <q-avatar color="red" text-color="white">
                     <q-icon :name="list.type == 'market' ?'shopping_cart' : 'list'" size="20px"></q-icon>
@@ -51,8 +59,7 @@
                 {{list.name}}
                 <q-icon v-if="list.favorite" name="star" color="yellow"></q-icon>
             </q-chip>
-        </div>
-        <q-btn class="absolute-bottom-right q-ma-lg" round color="red" icon="add" @click="$router.push('/user/editList/new')"></q-btn>
+        </div>-->
         <q-dialog v-model="confirmDelete" persistent>
             <q-card>
                 <q-card-section class="row items-center">
@@ -76,10 +83,11 @@ export default {
     props: ["allLists"],
     data() {
         return {
-            confirmDelete: false
+            confirmDelete: false,
+            allUsers: [],
+            styleCards: "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)"
         };
     },
-    mounted() {},
     watch: {
         listSelected: function() {
             //if (this.listSelected) this.chipSelected = this.listSelected.id;
@@ -136,6 +144,12 @@ export default {
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+}
+
+.my-card {
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
 }
 
 .child {

@@ -1,8 +1,8 @@
 <template>
-    <q-page class>
-        <q-header style="z-index: 10000;">
-            <q-toolbar>
-                <q-toolbar-title class="text-center">Your todo-market lists</q-toolbar-title>
+    <q-page>
+        <q-header class="stickyHeader">
+            <q-toolbar class="text-black">
+                <q-toolbar-title class="text-center text-weight-medium text-uppercase">Market lists</q-toolbar-title>
 
                 <q-btn flat round icon="account_circle">
                     <q-menu>
@@ -12,7 +12,8 @@
                             </q-item>
                             <q-item clickable v-close-menu>
                                 <q-item-section class="text-center" @click="logout">
-                                    <div>logout
+                                    <div>
+                                        logout
                                         <q-icon name="logout"></q-icon>
                                     </div>
                                 </q-item-section>
@@ -23,8 +24,17 @@
             </q-toolbar>
         </q-header>
         <Lists v-if="allLists.length >0" :allLists="allLists"/>
+        <q-btn
+            v-if="allLists.length >0"
+            :allLists="allLists"
+            class="fixed-bottom-right q-ma-lg"
+            round
+            color="red"
+            icon="add"
+            @click="$router.push('/user/editList/new')"
+        ></q-btn>
         <span v-else-if="loaded == true && allLists.length == 0">
-            <div class="flex flex-center fullscreen items-center">
+            <div class="flex flex-center items-center">
                 <div class="flex flex-center">
                     <h5 class="text-weight-thin q-ma-sm text-center text-white">create your first list right now!</h5>
                     <q-btn class="self-center" color="red" label="create" @click="$router.push('/user/EditList/new')"></q-btn>

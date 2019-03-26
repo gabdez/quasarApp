@@ -2,8 +2,10 @@
     <q-page class="flex flex-center loginWallpaper">
         <LoginVue/>
         <div class="fixed-bottom text-center q-mb-sm text-white text-italic">
-            <a @click="$router.push('/Signin')">No account? Sign in!
-                <q-icon name="arrow_forward" size="20px"></q-icon>
+            <hr class="hr q-mb-sm" style="width:90%">
+            <a @click="$router.push('/Signin')">
+                No account? Sign in!
+                <q-icon name="ion-ios-arrow-forward" class="q-ml-sm" size="20px"></q-icon>
             </a>
         </div>
     </q-page>

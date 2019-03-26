@@ -2,8 +2,9 @@
     <q-page class="flex flex-center backgroundApp">
         <SignIn/>
         <div class="fixed-bottom text-center q-mb-sm text-white text-italic">
+            <hr class="hr q-mb-sm" style="width:90%">
             <a @click="$router.go(-1)">
-                <q-icon name="arrow_back" size="20px"></q-icon>return Login page
+                <q-icon name="ion-ios-arrow-back" class="q-mr-sm" size="20px"></q-icon>already have an account? Login !
             </a>
         </div>
     </q-page>
