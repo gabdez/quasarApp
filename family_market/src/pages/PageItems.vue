@@ -1,5 +1,13 @@
 <template>
     <q-page>
+        <q-header class="stickyHeader">
+            <q-toolbar class="text-black">
+                <q-btn flat :ripple="false" color="primary" class="q-ma-none q-pa-none" @click="$router.go(-1);">
+                    <q-icon name="ion-ios-arrow-back" color="primary" class="q-pr-sm" size="25px"></q-icon>back
+                </q-btn>
+                <q-toolbar-title class="text-center text-weight-medium text-uppercase">{{list.name}}</q-toolbar-title>
+            </q-toolbar>
+        </q-header>
         <items v-if="list" :list="list"/>
         <NotFound v-else/>
     </q-page>

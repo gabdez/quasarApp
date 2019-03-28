@@ -33,18 +33,25 @@
             icon="add"
             @click="$router.push('/user/editList/new')"
         ></q-btn>
-        <span v-else-if="loaded == true && allLists.length == 0">
-            <div class="flex flex-center items-center">
-                <div class="flex flex-center">
-                    <h5 class="text-weight-thin q-ma-sm text-center text-white">create your first list right now!</h5>
-                    <q-btn class="self-center" color="red" label="create" @click="$router.push('/user/EditList/new')"></q-btn>
+        <div class="fullscreen q-mt-xl" v-else-if="loaded == true && allLists.length == 0">
+            <div class="flex full-height justify-center items-center">
+                <div class="q-mb-xl q-pb-xl flex column items-center">
+                    <q-icon size="150px" color="red-4" name="remove_shopping_cart"></q-icon>
+                    <br>
+                    <span class="text-subtitle1">Ooops you don't have any list yet...</span>
+                    <br>
+                    <q-btn class="btnStyled text-red-14" label="Let's start" @click="$router.push('/user/EditList/new')"></q-btn>
                 </div>
             </div>
-        </span>
+        </div>
     </q-page>
 </template>
 
 <style scoped>
+.btnStyled {
+    border-radius: 15px;
+    background-color: rgba(255, 179, 179, 0.6);
+}
 </style>
 
 <script>

@@ -41,6 +41,7 @@ module.exports = function(ctx) {
         "QSeparator",
         "QBadge",
         "QCardActions",
+        "QSpace",
         "QCardSection",
         "QCard",
         "QChip",

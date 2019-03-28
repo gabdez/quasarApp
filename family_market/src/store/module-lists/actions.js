@@ -82,6 +82,7 @@ export function setUsersInfo({ state, getters }, listId) {
   var usersIds = getters.getAllUsersIds(listId);
   var db = firebase.firestore();
   var arrayPromises = [];
+  usersIds.push("rerezar");
   for (let i in usersIds) {
     arrayPromises.push(
       db
@@ -94,11 +95,68 @@ export function setUsersInfo({ state, getters }, listId) {
     var infos = [];
     for (let i in values) {
       if (values[i].exists == true) {
-        infos.push(values[i].data());
+        var data = values[i].data();
+        data.id = usersIds[i];
+        infos.push(data);
       }
     }
     Vue.set(state.usersInfo, listId, infos);
-    console.log(state.usersInfo);
+  });
+}
+
+// users
+
+/**
+ * To add a user to a list
+ * @param {*} context
+ * @param {*} payload -> payload.listId && payload.userId
+ */
+export function addUserToList({ state, commit }, payload) {
+  return new Promise((resolve, reject) => {
+    var db = firebase.firestore();
+    console.log(payload.listId);
+    console.log(payload.userId);
+    //then update the list
+    db.collection("Lists")
+      .doc(payload.listId)
+      .update({
+        users: firebase.firestore.FieldValue.arrayUnion(payload.userId)
+      })
+      .then(function() {
+        console.log("item added succesfully");
+        resolve();
+      })
+      .catch(function(error) {
+        console.error("Error add item: ", error);
+        resolve(error);
+      });
+  });
+}
+
+/**
+ * delete a user of a list
+ * @param {*} context
+ * @param {*} payload -> payload.listId && payload.userId
+ */
+export function deleteUserToList({ state, commit }, payload) {
+  return new Promise((resolve, reject) => {
+    var db = firebase.firestore();
+    console.log(payload.listId);
+    console.log(payload.userId);
+    //then update the list
+    db.collection("Lists")
+      .doc(payload.listId)
+      .update({
+        users: firebase.firestore.FieldValue.arrayRemove(payload.userId)
+      })
+      .then(function() {
+        console.log("item added succesfully");
+        resolve();
+      })
+      .catch(function(error) {
+        console.error("Error add item: ", error);
+        resolve(error);
+      });
   });
 }
 

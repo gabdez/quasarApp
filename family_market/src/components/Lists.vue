@@ -61,15 +61,15 @@
             </q-chip>
         </div>-->
         <q-dialog v-model="confirmDelete" persistent>
-            <q-card>
+            <q-card class="cardRadius">
                 <q-card-section class="row items-center">
-                    <q-avatar icon="warning" color="red" text-color="white"/>
+                    <q-avatar icon="delete" color="red" text-color="white"/>
                     <span class="q-ml-sm">You definitively want to delete the list?</span>
                 </q-card-section>
 
-                <q-card-actions align="right">
-                    <q-btn flat label="Cancel" color="primary" v-close-dialog/>
-                    <q-btn flat label="Delete" color="red" @click="deleteList()" v-close-dialog/>
+                <q-card-actions class="cardAction">
+                    <q-btn flat class="btnL q-ma-none" label="Cancel" color="primary" v-close-dialog/>
+                    <q-btn flat class="btnR" color="red-14" label="Delete" @click="deleteList()" v-close-dialog/>
                 </q-card-actions>
             </q-card>
         </q-dialog>

@@ -38,6 +38,25 @@ export function userLogin({ commit, dispatch }, { email, password }) {
   });
 }
 
+export function logout({ commit }) {
+  firebase
+    .auth()
+    .signOut()
+    .then(function() {
+      // Sign-out successful.
+      console.log("logout succesfull");
+      commit("setUser", null);
+      commit("setUserUid", null);
+      commit("setIsAuthenticated", false);
+    })
+    .catch(function(error) {
+      // An error happened.
+      console.log("logout unsuccesfull");
+      commit("setUserUid", null);
+      commit("setIsAuthenticated", false);
+    });
+}
+
 // function to know if user is already auth with "remember me" btn
 export function userIsLogin({ commit, dispatch }) {
   return new Promise((resolve, reject) => {
@@ -60,7 +79,9 @@ export function setUser({ state, commit }) {
     .then(function(doc) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
-        commit("setUser", doc.data());
+        var data = doc.data();
+        data.id = doc.id;
+        commit("setUser", data);
       } else {
         console.log("No such document!");
       }
@@ -122,21 +143,27 @@ export function getUsersInfo({ state }, userId) {
   });
 }
 
-export function logout({ commit }) {
-  firebase
-    .auth()
-    .signOut()
-    .then(function() {
-      // Sign-out successful.
-      console.log("logout succesfull");
-      commit("setUser", null);
-      commit("setUserUid", null);
-      commit("setIsAuthenticated", false);
-    })
-    .catch(function(error) {
-      // An error happened.
-      console.log("logout unsuccesfull");
-      commit("setUserUid", null);
-      commit("setIsAuthenticated", false);
-    });
+export function searchUser({ state }, username) {
+  return new Promise((resolve, reject) => {
+    console.log(username);
+    //var array = [];
+    var db = firebase.firestore();
+    db.collection("Users")
+      .where("username", "==", username)
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          console.log(doc.data());
+          let data = doc.data();
+          data.id = doc.id;
+          resolve(data);
+          //array.push(data);
+        });
+        reject();
+        //resolve(array);
+      })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
+  });
 }

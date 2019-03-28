@@ -1,6 +1,6 @@
 <template>
     <q-layout>
-        <q-page-container class="bgListLayout" style="padding-top:0px">
+        <q-page-container class="bgListLayout q-pt-none" style="padding-top:0px!important">
             <transition name="list">
                 <keep-alive include="PageAllLists">
                     <router-view></router-view>

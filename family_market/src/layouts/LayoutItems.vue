@@ -1,6 +1,6 @@
 <template>
     <q-layout>
-        <q-page-container>
+        <q-page-container class="bgListLayout">
             <router-view></router-view>
         </q-page-container>
     </q-layout>
