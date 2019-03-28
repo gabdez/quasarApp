@@ -1,5 +1,5 @@
 <template>
-    <div style="padding-top:75px; width:90%;">
+    <div style="width:90%;">
         <q-input outlined color="light-blue-5" bg-color="white" v-model="email" placeholder="email"/>
         <br>
         <q-input v-model="password" bg-color="white" color="light-blue-5" outlined type="password" placeholder="password"/>
@@ -7,7 +7,7 @@
         <div class="text-red">{{errorMsg}}</div>
         <br>
         <span class="row justify-center">
-            <q-btn color="light-blue-5" :loading="loading" :ripple="false" label="Login" :icon-right="'fas fa-shopping-cart'" @click="login">
+            <q-btn style="background-color: #81d4fa" class="text-blue-14" rounded :loading="loading" :ripple="false" label="Login" @click="login">
                 <template v-slot:loading>
                     <q-spinner/>
                 </template>

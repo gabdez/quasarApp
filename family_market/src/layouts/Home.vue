@@ -1,6 +1,6 @@
 <template>
     <q-layout>
-        <q-page-container>
+        <q-page-container class="loginWallpaper">
             <transition name="page" mode="out-in">
                 <router-view></router-view>
             </transition>

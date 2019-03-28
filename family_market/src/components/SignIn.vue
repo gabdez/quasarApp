@@ -22,7 +22,9 @@
             <q-btn
                 :loading="submitting"
                 :disable="email == '' || password == '' || username == '' ? true : false "
-                color="light-blue-5"
+                style="background-color: #81d4fa"
+                class="text-blue-14"
+                rounded
                 :ripple="false"
                 label="Sign in"
                 :icon-right="'fas fa-shopping-cart'"
