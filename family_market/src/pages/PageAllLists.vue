@@ -1,28 +1,5 @@
 <template>
     <q-page>
-        <q-header class="stickyHeader">
-            <q-toolbar class="text-black">
-                <q-toolbar-title class="text-center text-weight-medium text-uppercase">Market lists</q-toolbar-title>
-
-                <q-btn flat round icon="account_circle">
-                    <q-menu>
-                        <q-list style="min-width: 150px">
-                            <q-item v-ripple clickable v-close-menu>
-                                <q-item-section class="text-center" @click="$router.push('/user/account')">User settings</q-item-section>
-                            </q-item>
-                            <q-item clickable v-close-menu>
-                                <q-item-section class="text-center" @click="logout">
-                                    <div>
-                                        logout
-                                        <q-icon name="logout"></q-icon>
-                                    </div>
-                                </q-item-section>
-                            </q-item>
-                        </q-list>
-                    </q-menu>
-                </q-btn>
-            </q-toolbar>
-        </q-header>
         <Lists v-if="allLists.length >0" :allLists="allLists"/>
         <q-btn
             v-if="allLists.length >0"
@@ -64,14 +41,7 @@ export default {
         return {};
     },
     mounted() {},
-    methods: {
-        logout() {
-            this.$store.dispatch("users/logout");
-            this.$store.commit("lists/setAllLists", []);
-            this.$store.commit("lists/setLoaded", false);
-            this.$router.push("/");
-        }
-    },
+    methods: {},
     computed: {
         allLists() {
             return this.$store.getters["lists/getAllLists"];
