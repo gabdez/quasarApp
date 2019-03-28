@@ -22,7 +22,7 @@
                 <q-separator dark/>
                 <q-card-actions class="flex-center">
                     <span class="float-right">
-                        <q-btn icon="delete_forever" color="negative" @click.stop="confirmDelete = true"></q-btn>
+                        <q-btn icon="delete_forever" color="negative" @click.stop="deleteConfirmation(list.id)"></q-btn>
                         <q-btn class="q-mx-sm" icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
                         <q-btn outline @click.stop="list.favorite = !list.favorite" :color="list.favorite == true ? 'yellow': 'white'">
                             <q-icon name="star"></q-icon>
@@ -74,6 +74,10 @@ export default {
         goListItems(id) {
             this.$store.commit("lists/setIdListSelected", id);
             this.$router.push("/" + this.listSelected.id + "/Items");
+        },
+        deleteConfirmation(id) {
+            this.confirmDelete = true;
+            this.$store.commit("lists/setIdListSelected", id);
         }
     },
     computed: {
