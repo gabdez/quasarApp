@@ -1,6 +1,6 @@
 <template>
-    <div id="q-app">
-        <transition name="page" mode="out-in">
+    <div id="q-app" class="bgListLayout">
+        <transition :name="transitionName" mode="out-in">
             <router-view/>
         </transition>
     </div>
@@ -12,7 +12,16 @@ import { LocalStorage } from "quasar";
 export default {
     name: "App",
     data() {
-        return {};
+        return {
+            transitionName: "slide-left"
+        };
+    },
+    watch: {
+        $route(to, from) {
+            const toDepth = to.path.split("/").length;
+            const fromDepth = from.path.split("/").length;
+            this.transitionName = toDepth < fromDepth || to.path == "/" ? "slide-right" : "slide-left";
+        }
     },
     created() {},
     mounted() {

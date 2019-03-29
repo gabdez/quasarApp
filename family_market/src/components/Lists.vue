@@ -12,18 +12,13 @@
             >
                 <q-card-section>
                     <div class="text-h6 text-center text-weight-light text-uppercase">{{list.name}}</div>
-
-                    <div class="text-subtitle1 text-weight-light" v-if="allUsers.length > 0">
-                        Users:
-                        <q-chip v-for="(user, index) in allUsers" :key="index" color="white">{{user.username}}</q-chip>
-                    </div>
                 </q-card-section>
                 <q-card-section class="text-weight-light">{{list.description}}</q-card-section>
                 <q-separator dark/>
                 <q-card-actions class="flex-center">
                     <span class="float-right">
-                        <q-btn icon="delete_forever" color="negative" @click.stop="deleteConfirmation(list.id)"></q-btn>
-                        <q-btn class="q-mx-sm" icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
+                        <q-btn icon="delete_forever" outline color="negative" @click.stop="deleteConfirmation(list.id)"></q-btn>
+                        <q-btn class="q-mx-sm" outline icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
                         <q-btn outline @click.stop="list.favorite = !list.favorite" :color="list.favorite == true ? 'yellow': 'white'">
                             <q-icon name="star"></q-icon>
                         </q-btn>
@@ -55,7 +50,6 @@ export default {
     data() {
         return {
             confirmDelete: false,
-            allUsers: [],
             styleCards: "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)"
         };
     },

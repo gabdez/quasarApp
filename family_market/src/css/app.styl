@@ -13,11 +13,9 @@
 .loginWallpaper {
     width: 100%;
     height: 100%;
-    background: url("../statics/bgEssai2.jpeg") no-repeat;
-    background-position-x: center;
-    background-position-y: 30%;
-    background-size: contain 100%;
-    -webkit-background-size: contain 100%;
+    background: url("../statics/bgEssai.jpeg") no-repeat;
+    background-size: 150% 100%;
+    background-position: center;
 }
 .stickyHeader {
     position: sticky;
@@ -43,6 +41,7 @@
     display: flex;
     border-top: solid 1px #f0f0f0;
     padding: 0;
+    min-height: 50px!important;
 }
 .cardRadius {
     border-radius: 15px!important;
@@ -51,13 +50,79 @@
     font-family: "homefont";
 }
 
-
-
 @font-face
   font-family homefont
   src url(../statics/fonts/Rounded/SimplyRounded.ttf)
 
 
+.slide-up-enter-active {
+    transition: opacity 0.5s, transform 0.5s;
+}
+.slide-up-leave-active {
+  transition: opacity 0.5s;
+}
+.slide-up-enter{
+    opacity: 0;
+    transform: translateY(20%);
+}
+.slide-up-leave-to {
+    opacity: 0;
+}
+.slide-down-enter-active {
+  transition: opacity 0.5s;
+}
+.slide-down-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
+}
+.slide-down-enter{
+    opacity: 0;
+}
+.slide-down-leave-to {
+    opacity: 0;
+    transform: translateY(20%);
+}
+
+.slide-left-enter-active {
+   animation: slideTo0 0.2s;
+}
+.slide-left-leave-active {
+  animation: slideToM500 0.2s;
+}
+.slide-right-enter-active {
+   animation: slideToM500 0.2s reverse;
+}
+.slide-right-leave-active {
+  animation: slideTo0 0.2s reverse;
+}
+
+@-webkit-keyframes slideToM500 {
+    from {  transform:translateX(0px) }
+    to {  transform:translateX(-500px)}
+}
+
+@-moz-keyframes slideToM500 {
+    from {  transform:translateX(0px) }
+    to {  transform:translateX(-500px)}
+}
+
+@keyframes slideToM500 {
+    from {  transform:translateX(0px) }
+    to {  transform:translateX(-500px)}
+}
+@-webkit-keyframes slideTo0 {
+    from {  transform:translateX(500px) }
+    to {  transform:translateX(0px)}
+}
+
+@-moz-keyframes slideTo0 {
+    from {  transform:translateX(500px) }
+    to {  transform:translateX(0px)}
+}
+
+@keyframes slideTo0 {
+    from {  transform:translateX(500px) }
+    to {  transform:translateX(0px)}
+}
 
 
 .page-enter-active,
