@@ -51,7 +51,10 @@ module.exports = function(ctx) {
         "QSelect",
         "QSpinner",
         "QRadio",
-        "QMenu"
+        "QMenu",
+        "QBar",
+        "QBreadcrumbs",
+        "QBreadcrumbsEl"
       ],
 
       directives: ["Ripple", "CloseDialog", "CloseMenu", "TouchSwipe"],

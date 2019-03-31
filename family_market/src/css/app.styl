@@ -157,3 +157,13 @@
     from {  transform:scale(0) }
     to {  transform:scale(1)}
 }
+
+
+.item-enter-active, .item-leave-active {
+    transition: all 0.3s;
+}
+
+.item-enter, .item-leave-to { /* .item-leave-active below version 2.1.8 */
+    opacity: 0;
+    transform: translateX(30px);
+}

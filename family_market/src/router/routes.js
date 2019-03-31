@@ -16,7 +16,12 @@ const routes = [
   {
     path: "/:idList/Items",
     component: () => import("layouts/LayoutItems.vue"),
-    children: [{ path: "", component: () => import("pages/PageItems.vue") }]
+    children: [
+      {
+        path: "",
+        component: () => import("pages/PageItems.vue")
+      }
+    ]
   }
 ];
 
