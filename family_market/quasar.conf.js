@@ -54,7 +54,8 @@ module.exports = function(ctx) {
         "QMenu",
         "QBar",
         "QBreadcrumbs",
-        "QBreadcrumbsEl"
+        "QBreadcrumbsEl",
+        "QBtnToggle"
       ],
 
       directives: ["Ripple", "CloseDialog", "CloseMenu", "TouchSwipe"],

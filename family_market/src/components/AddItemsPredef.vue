@@ -2,13 +2,37 @@
     <div>
         <transition name="slide-left">
             <div class="grid-container q-mt-xl" v-if="objItems == null">
-                <div class="full-height" v-for="(items, index) in itemsPredefined" :key="items.name" @click="chooseCategorie(index)">{{items.name}}</div>
-                <div class="full-height" v-if="itemsPredefined.length % 2 != 0"></div>
+                <div
+                    class="full-height"
+                    v-for="(items, index) in itemsPredefined"
+                    :key="items.name"
+                    @click="chooseCategorie(index)"
+                >
+                    {{ items.name }}
+                    <q-img
+                        :src="'statics/icons/products/' + items.url"
+                        spinner-color="white"
+                    />
+                </div>
+                <div
+                    class="full-height"
+                    v-if="itemsPredefined.length % 2 != 0"
+                ></div>
             </div>
             <div v-else class="list-container">
-                <q-input class="q-mx-md" rounded outlined v-model="searchItem" dense placeholder="search product">
+                <q-input
+                    class="q-mx-md"
+                    rounded
+                    outlined
+                    v-model="searchItem"
+                    dense
+                    placeholder="search product"
+                >
                     <template v-slot:append>
-                        <q-icon name="close" @click="searchItem = null"></q-icon>
+                        <q-icon
+                            name="close"
+                            @click="searchItem = null"
+                        ></q-icon>
                     </template>
                     <template v-slot:prepend>
                         <q-icon name="search"></q-icon>
@@ -28,7 +52,7 @@
                                     @click="$emit('addItemPredef', item.name)"
                                 ></q-btn>
                             </q-item>
-                            <hr class="hr q-ma-none" :key="item.name+'-hr'">
+                            <hr class="hr q-ma-none" :key="item.name + '-hr'" />
                         </template>
                     </transition-group>
                 </q-list>
@@ -38,9 +62,6 @@
 </template>
 
 <style scoped lang="stylus">
-// "quasar-variables" is a Webpack alias injected by Quasar CLI
-@import '~quasar-variables';
-
 .grid-container {
     display: grid;
     grid-template-columns: auto auto;
@@ -58,7 +79,7 @@
     background-color: $grey-2;
     text-align: center;
     padding: 20px 0;
-    font-size: 30px;
+    font-size: 20px;
     color: $grey-14;
 }
 </style>
@@ -81,7 +102,9 @@ export default {
             return this.searchItem == null
                 ? this.objItems.items
                 : this.objItems.items.filter(item => {
-                      return item.name.toLowerCase().includes(this.searchItem.toLowerCase());
+                      return item.name
+                          .toLowerCase()
+                          .includes(this.searchItem.toLowerCase());
                   });
         }
     }

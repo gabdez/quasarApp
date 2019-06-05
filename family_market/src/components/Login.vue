@@ -1,22 +1,65 @@
 <template>
-    <div style="width:90%;">
-        <q-input outlined color="light-blue-5" bg-color="white" v-model="email" placeholder="email"/>
-        <br>
-        <q-input v-model="password" bg-color="white" color="light-blue-5" outlined type="password" placeholder="password"/>
-        <q-checkbox v-model="rememberMe" class="text-white" color="light-blue-5" label="Remember me"/>
-        <div class="text-red">{{errorMsg}}</div>
-        <br>
-        <span class="row justify-center">
-            <q-btn style="background-color: #81d4fa" class="text-blue-14" rounded :loading="loading" :ripple="false" label="Login" @click="login">
-                <template v-slot:loading>
-                    <q-spinner/>
-                </template>
-            </q-btn>
-        </span>
-    </div>
+    <q-card class="bg-white cardLogin q-pt-md">
+        <q-card-section>
+            <q-input
+            stack-label
+            color="$primary"
+            bg-color="white"
+            class="q-mt-sm"
+            v-model="email"
+            label="email"
+        />
+        </q-card-section>
+        <q-card-section>
+            <q-input
+                v-model="password"
+                label="mot de passe"
+                bg-color="white"
+                color="$primary"
+                stack-label
+                type="password"
+            />
+            <q-checkbox
+                v-model="rememberMe"
+                class="text-grey"
+                color="$primary"
+                label="Remember me"
+            />
+        </q-card-section>
+        <q-card-section class="text-red" style="position: absolute">{{ errorMsg }}</q-card-section>
+        <q-card-section>
+            <span class="row justify-center">
+                <q-btn
+                    class="btnLogin text-white"
+                    rounded
+                    :loading="loading"
+                    :ripple="false"
+                    label="Connexion"
+                    @click="login"
+                >
+                    <template v-slot:loading>
+                        <q-spinner />
+                    </template>
+                </q-btn>
+            </span>
+        </q-card-section>
+    </q-card>
 </template>
 
-<style scoped>
+<style scoped lang="stylus">
+$custom-color = linear-gradient(to right, #1cd8d2, #93edc7);
+
+.btnLogin {
+    background: $custom-color;
+    width: 60%;
+    position relative;
+    top: 57px;
+}
+.cardLogin{
+    width : 85%;
+    border-radius: 30px;
+    height : 300px;
+}
 </style>
 
 <script>
@@ -50,9 +93,17 @@ export default {
                 .then(data => {
                     this.loading = false;
                     if (this.rememberMe == true) {
-                        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                        firebase
+                            .auth()
+                            .setPersistence(
+                                firebase.auth.Auth.Persistence.LOCAL
+                            );
                     } else {
-                        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+                        firebase
+                            .auth()
+                            .setPersistence(
+                                firebase.auth.Auth.Persistence.NONE
+                            );
                     }
                     let email = data.user.email;
                     this.$q.localStorage.set("userEmail", email);

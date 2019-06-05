@@ -1,15 +1,35 @@
 <template>
     <q-page>
-        <Lists v-if="allLists.length >0" :allLists="allLists"/>
-        <q-btn v-if="allLists.length >0" class="fixed-bottom-right q-ma-lg" round color="red" icon="add" @click="$router.push('/user/editList/new')"></q-btn>
-        <div class="fullscreen q-mt-xl" v-else-if="loaded == true && allLists.length == 0">
+        <Lists v-if="allLists.length > 0" :allLists="allLists" />
+        <q-btn
+            v-if="allLists.length > 0"
+            class="fixed-bottom-right q-ma-lg"
+            round
+            color="red"
+            icon="add"
+            @click="$router.push('/user/editList/new')"
+        ></q-btn>
+        <div
+            class="fullscreen q-mt-xl"
+            v-else-if="loaded == true && allLists.length == 0"
+        >
             <div class="flex full-height justify-center items-center">
                 <div class="q-mb-xl q-pb-xl flex column items-center">
-                    <q-icon size="150px" color="red-4" name="remove_shopping_cart"></q-icon>
-                    <br>
-                    <span class="text-subtitle1">Ooops you don't have any list yet...</span>
-                    <br>
-                    <q-btn class="btnStyled text-red-14" label="Let's start" @click="$router.push('/user/EditList/new')"></q-btn>
+                    <q-icon
+                        size="150px"
+                        color="red-4"
+                        name="remove_shopping_cart"
+                    ></q-icon>
+                    <br />
+                    <span class="text-subtitle1"
+                        >Ooops you don't have any list yet...</span
+                    >
+                    <br />
+                    <q-btn
+                        class="btnStyled text-red-14"
+                        label="Let's start"
+                        @click="$router.push('/user/EditList/new')"
+                    ></q-btn>
                 </div>
             </div>
         </div>

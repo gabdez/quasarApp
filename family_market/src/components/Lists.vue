@@ -6,36 +6,79 @@
                 :key="list.id"
                 :name="list.id"
                 v-ripple
-                class="my-card text-white q-ma-lg shadow-8"
+                class="my-card text-white q-ma-lg"
                 @click="goListItems(list.id)"
-                :style="{background: styleCards}"
+                :style="{ background: styleCards }"
             >
                 <q-card-section>
-                    <div class="text-h6 text-center text-weight-light text-uppercase">{{list.name}}</div>
+                    <div
+                        class="text-h6 text-center text-weight-light text-uppercase"
+                    >
+                        {{ list.name }}
+                    </div>
                 </q-card-section>
-                <q-card-section class="text-weight-light">{{list.description}}</q-card-section>
-                <q-separator dark/>
+                <q-card-section class="text-weight-light">{{
+                    list.description
+                }}</q-card-section>
+                <q-separator dark />
                 <q-card-actions class="flex-center">
                     <span class="float-right">
-                        <q-btn icon="delete_forever" outline color="negative" @click.stop="deleteConfirmation(list.id)"></q-btn>
-                        <q-btn class="q-mx-sm" outline icon="edit" color="primary" @click.stop="$router.push('/user/EditList/'+list.id)"></q-btn>
-                        <q-btn outline @click.stop="list.favorite = !list.favorite" :color="list.favorite == true ? 'yellow': 'white'">
+                        <q-btn
+                            icon="delete_forever"
+                            outline
+                            color="negative"
+                            @click.stop="deleteConfirmation(list.id)"
+                        ></q-btn>
+                        <q-btn
+                            class="q-mx-sm"
+                            outline
+                            icon="edit"
+                            color="primary"
+                            @click.stop="
+                                $router.push('/user/EditList/' + list.id)
+                            "
+                        ></q-btn>
+                        <q-btn
+                            outline
+                            @click.stop="list.favorite = !list.favorite"
+                            :color="list.favorite == true ? 'yellow' : 'white'"
+                        >
                             <q-icon name="star"></q-icon>
                         </q-btn>
                     </span>
                 </q-card-actions>
             </q-card>
         </template>
-        <q-dialog v-model="confirmDelete" persistent>
+        <q-dialog
+            transition-show="slide-up"
+            transition-hide="slide-down"
+            v-model="confirmDelete"
+            persistent
+        >
             <q-card class="cardRadius">
                 <q-card-section class="row items-center">
-                    <q-avatar icon="delete" color="red" text-color="white"/>
-                    <span class="q-ml-sm">You definitively want to delete the list?</span>
+                    <q-avatar icon="delete" color="red" text-color="white" />
+                    <span class="q-ml-sm">
+                        You definitively want to delete the list?
+                    </span>
                 </q-card-section>
 
                 <q-card-actions class="cardAction">
-                    <q-btn flat class="btnL q-ma-none" label="Cancel" color="primary" v-close-dialog/>
-                    <q-btn flat class="btnR" color="red-14" label="Delete" @click="deleteList()" v-close-dialog/>
+                    <q-btn
+                        flat
+                        class="btnModal q-ma-none"
+                        label="Cancel"
+                        color="primary"
+                        v-close-dialog
+                    />
+                    <q-btn
+                        flat
+                        class="btnModal"
+                        color="red-14"
+                        label="Delete"
+                        @click="deleteList()"
+                        v-close-dialog
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -50,7 +93,8 @@ export default {
     data() {
         return {
             confirmDelete: false,
-            styleCards: "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)"
+            styleCards:
+                "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)"
         };
     },
     methods: {
@@ -83,9 +127,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-// "quasar-variables" is a Webpack alias injected by Quasar CLI
-@import '~quasar-variables';
-
 .container {
     height: 75px;
     display: flex;
@@ -96,9 +137,9 @@ export default {
 }
 
 .my-card {
-    -webkit-border-radius: 35px;
-    -moz-border-radius: 35px;
-    border-radius: 35px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
 }
 
 .child {

@@ -2,6 +2,7 @@
   "items": [
     {
       "name": "Fruits et Légumes",
+      "url": "harvest.png",
       "items": [
         { "name": "Abricot" },
         { "name": "Amande" },
@@ -57,6 +58,7 @@
     },
     {
       "name": "Produits Céréaliers",
+      "url": "wheat.png",
       "items": [
         { "name": "Avoine" },
         { "name": "Barre de céréale" },
@@ -92,10 +94,12 @@
     },
     {
       "name": "Viandes, oeufs, poissons",
+      "url": "meat.png",
       "items": [{ "name": "" }]
     },
     {
       "name": "Lait et produits Laitiers",
+      "url": "milk-products.png",
       "items": [
         { "name": "Brie" },
         { "name": "Camembert" },
@@ -124,6 +128,7 @@
     },
     {
       "name": "Boissons",
+      "url": "water.png",
       "items": [
         { "name": "Bière" },
         { "name": "Boisson gazeuse" },
@@ -149,6 +154,7 @@
     },
     {
       "name": "Produits Sucrés",
+      "url": "toffee.png",
       "items": [
         { "name": "Barre chocolatée" },
         { "name": "Bonbon" },
@@ -171,6 +177,7 @@
     },
     {
       "name": "Divers",
+      "url": "",
       "items": [{ "name": "Beurre de cacahuète" }]
     }
   ]

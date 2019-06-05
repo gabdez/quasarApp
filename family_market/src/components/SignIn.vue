@@ -1,32 +1,32 @@
 <template>
-    <div style="padding-bottom: 100px; width:90%;">
-        <div>
-            <q-input outlined color="light-blue-5" bg-color="white" v-model="email" placeholder="email"/>
-            <br>
+    <q-card class="bg-white cardLogin q-pt-md">
+        <q-card-section>
+            <q-input label-stacked color="$primary" bg-color="white" v-model="email" label="email"/>
+        </q-card-section>
+        <q-card-section class="q-pb-none">
             <q-input
                 v-model="password"
                 bg-color="white"
-                color="light-blue-5"
-                outlined
+                color="$primary"
+                label-stacked
                 type="password"
-                placeholder="password"
                 :rules="[ val => val.length >= 6 || 'Please use minimum 6 characters']"
-                class="q-pb-md"
+                label="password"
             />
-            <hr>
-            <q-input class="q-pt-md" outlined color="light-blue-5" bg-color="white" v-model="username" placeholder="username"/>
-        </div>
-        <div class="text-red">{{errorMsg}}</div>
-        <br>
-        <span class="row justify-center">
+        </q-card-section>
+        <q-card-section class="text-red q-pb-none">
+            <q-input label-stacked label="username" color="$primary" bg-color="white" v-model="username"/>
+        </q-card-section>
+        <q-card-section class="text-red" style="position: absolute">{{ errorMsg }}</q-card-section>
+        <q-card-section>
+            <span class="row justify-center">
             <q-btn
                 :loading="submitting"
                 :disable="email == '' || password == '' || username == '' ? true : false "
-                style="background-color: #81d4fa"
-                class="text-blue-14"
+                class="text-white btnSignin"
                 rounded
                 :ripple="false"
-                label="Sign in"
+                label="Inscription"
                 :icon-right="'fas fa-shopping-cart'"
                 @click="signIn"
             >
@@ -35,10 +35,24 @@
                 </template>
             </q-btn>
         </span>
-    </div>
+        </q-card-section>
+    </q-card>
 </template>
 
-<style scoped>
+<style scoped lang="stylus">
+$custom-color = linear-gradient(to right, #1cd8d2, #93edc7);
+
+.btnSignin {
+    background: $custom-color;
+    width: 60%;
+    position relative;
+    top: 45px;
+}
+.cardLogin{
+    width : 85%;
+    border-radius: 30px;
+    height : 300px;
+}
 </style>
 
 <script>
