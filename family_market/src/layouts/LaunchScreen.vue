@@ -1,6 +1,6 @@
 <template>
-    <q-layout>
-        <q-page-container class="loginWallpaper">
+    <q-layout class="page">
+        <q-page-container class="loginWallpaper page">
             <transition name="page" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -13,10 +13,6 @@
 
 <script>
 export default {
-    name: "Home",
-    data() {
-        return {};
-    },
-    methods: {}
+    name: "LaunchScreen"
 };
 </script>

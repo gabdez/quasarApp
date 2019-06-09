@@ -1,6 +1,6 @@
 <template>
     <q-layout>
-        <q-page-container class="bgListLayout q-pt-none" style="padding-top:0px!important">
+        <q-page-container class="q-pt-none" style="padding-top:0px!important">
             <q-header class="stickyHeader">
                 <q-toolbar class="text-black">
                     <q-btn v-if="view != 'PageAllLists'" flat :ripple="false" color="primary" class="q-ma-none q-pa-none" @click="$router.go(-1);">

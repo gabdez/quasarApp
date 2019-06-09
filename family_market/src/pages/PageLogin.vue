@@ -1,4 +1,5 @@
 <template>
+<transition name="slide-up">
     <q-page class="full-height flex justify-center" style="background-image: linear-gradient(to top, rgba(9,32,63,0.9) 0%, rgba(83,120,149,0.9) 100%);">
         <h6 class="text-h3 homefont text-primary q-ma-none q-mt-xl" style="text-align: center">My Family Market</h6>
         <!-- <LoginVue/> -->
@@ -22,6 +23,7 @@
             />
         </div>
     </q-page>
+    </transition>
 </template>
 
 <style lang="stylus">
@@ -42,6 +44,9 @@ export default {
         return {
             component: "LoginVue"
         };
+    },
+    mounted(){
+        this.$store.commit("app/setAppLaunch", true);
     },
     computed:{
         slide(){

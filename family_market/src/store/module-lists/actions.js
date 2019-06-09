@@ -82,7 +82,6 @@ export function setUsersInfo({ state, getters }, listId) {
   var usersIds = getters.getAllUsersIds(listId);
   var db = firebase.firestore();
   var arrayPromises = [];
-  usersIds.push("rerezar");
   for (let i in usersIds) {
     arrayPromises.push(
       db
@@ -101,6 +100,7 @@ export function setUsersInfo({ state, getters }, listId) {
       }
     }
     Vue.set(state.usersInfo, listId, infos);
+    console.log(state.usersInfo);
   });
 }
 

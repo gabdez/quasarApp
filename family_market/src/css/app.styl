@@ -3,6 +3,12 @@
 .backgroundApp{
     background-color: $primary;
 }
+.custom-bg{
+    background-image: linear-gradient(to top, rgba(9,32,63,1) 0%, rgba(83,120,149,1) 100%);
+}
+.custom-bg-bis{
+    background-image: linear-gradient(to right, #1cd8d2, #93edc7);
+}
 .bgListLayout{
     background: rgba(27,126,247,0.1);
     min-height: 100vh!important;
@@ -35,6 +41,11 @@
 }
 .cardRadius {
     border-radius: 15px!important;
+}
+a:active, a:focus {
+  outline: 0;
+  -moz-outline-style: none;
+  text-decoration: none;
 }
 .homefont {
     font-family: "homefont";
@@ -72,48 +83,40 @@
     transform: translateY(20%);
 }
 
-.slide-left-enter-active {
-   animation: slideTo0 0.2s;
-}
-.slide-left-leave-active {
-  animation: slideToM500 0.2s;
-}
+
 .slide-right-enter-active {
-   animation: slideToM500 0.2s reverse;
+  transition: all .5s ease;
 }
 .slide-right-leave-active {
-  animation: slideTo0 0.2s reverse;
+  transition: all .2s ease;
+}
+.slide-right-enter
+/* .slide-right-leave-active below version 2.1.8 */ {
+  transform: translateX(-400px);
+  opacity: 0;
+}
+.slide-right-leave-to
+/* .slide-right-leave-active below version 2.1.8 */ {
+  transform: translateX(400px);
+  opacity: 0;
 }
 
-@-webkit-keyframes slideToM500 {
-    from {  transform:translateX(0px) }
-    to {  transform:translateX(-500px)}
-}
 
-@-moz-keyframes slideToM500 {
-    from {  transform:translateX(0px) }
-    to {  transform:translateX(-500px)}
+.slide-left-enter-active {
+  transition: all .5s ease;
 }
-
-@keyframes slideToM500 {
-    from {  transform:translateX(0px) }
-    to {  transform:translateX(-500px)}
+.slide-left-leave-active {
+  transition: all .2s ease;
 }
-@-webkit-keyframes slideTo0 {
-    from {  transform:translateX(500px) }
-    to {  transform:translateX(0px)}
+.slide-left-enter
+/* .slide-left-leave-active below version 2.1.8 */ {
+  transform: translateX(400px);
+  opacity: 0;
 }
-
-@-moz-keyframes slideTo0 {
-    from {  transform:translateX(500px) }
-    to {  transform:translateX(0px)}
-}
-
-@keyframes slideTo0 {
-    from {  transform:translateX(500px) }
-    to {  transform:translateX(0px)}
-}
-
+ .slide-left-leave-to{
+  transform: translateX(-400px);
+  opacity: 0;
+ }
 
 .page-enter-active,
 .page-leave-active {
@@ -156,4 +159,13 @@
 .item-enter, .item-leave-to { /* .item-leave-active below version 2.1.8 */
     opacity: 0;
     transform: translateX(30px);
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: all 0.3s;
+    transition-delay: 0.5s;
+}
+
+.fade-enter, .fade-leave-to { /* .item-leave-active below version 2.1.8 */
+    opacity: 0;
 }

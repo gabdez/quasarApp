@@ -2,7 +2,8 @@
 export function addList(state, list) {
   var l = list.data();
   l.id = list.id;
-  if (state.list_todo_market.filter(list => list.id === l.id).length == 0) state.list_todo_market.splice(state.list_todo_market.length, 0, l);
+  if (state.list_todo_market.filter(list => list.id === l.id).length == 0)
+    state.list_todo_market.push(l);
 }
 export function deleteList(state, list) {
   let listToRemove = state.list_todo_market.filter(function(obj) {

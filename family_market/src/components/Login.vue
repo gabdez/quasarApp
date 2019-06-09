@@ -107,7 +107,7 @@ export default {
                     }
                     let email = data.user.email;
                     this.$q.localStorage.set("userEmail", email);
-                    this.$router.push("/user");
+                    this.$router.push("/home");
                 })
                 .catch(err => {
                     this.errorMsg = err.message;

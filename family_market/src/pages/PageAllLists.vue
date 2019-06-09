@@ -1,6 +1,47 @@
 <template>
     <q-page>
-        <Lists v-if="allLists.length > 0" :allLists="allLists" />
+            <div v-if="allLists.length > 0" class="q-px-sm">
+        <template>
+            <transition-group name="item">
+                <template v-for="list in allLists">
+                    <list :list="list"></list>
+                </template>
+            </transition-group>
+        </template>
+        <q-dialog
+            transition-show="slide-up"
+            transition-hide="slide-down"
+            v-model="confirmDelete"
+            persistent
+        >
+            <q-card class="cardRadius">
+                <q-card-section class="row items-center">
+                    <q-avatar icon="delete" color="red" text-color="white" />
+                    <span class="q-ml-sm">
+                        You definitively want to delete the list?
+                    </span>
+                </q-card-section>
+
+                <q-card-actions class="cardAction">
+                    <q-btn
+                        flat
+                        class="btnModal q-ma-none"
+                        label="Cancel"
+                        color="primary"
+                        v-close-dialog
+                    />
+                    <q-btn
+                        flat
+                        class="btnModal"
+                        color="red-14"
+                        label="Delete"
+                        @click="deleteList()"
+                        v-close-dialog
+                    />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
+    </div>
         <q-btn
             v-if="allLists.length > 0"
             class="fixed-bottom-right q-ma-lg"
@@ -45,19 +86,15 @@
 
 <script>
 import { Loading } from "quasar";
-import Lists from "../components/Lists.vue";
+import List from "../components/List.vue";
 export default {
     name: "PageAllLists",
-    components: { Lists },
+    components: { List },
     data() {
         return {};
     },
-    mounted() {},
     methods: {},
     computed: {
-        allLists() {
-            return this.$store.getters["lists/getAllLists"];
-        },
         loaded() {
             return this.$store.getters["lists/getLoaded"];
         }

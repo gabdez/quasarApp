@@ -6,13 +6,15 @@ export function getLoaded(state) {
 }
 export function getList(state) {
   return function(id_list) {
-    if (id_list) return state.list_todo_market.filter(list => list.id == id_list)[0];
+    if (id_list)
+      return state.list_todo_market.filter(list => list.id == id_list)[0];
     else return state.list_todo_market[0];
   };
 }
 export function getListSelected(state) {
   let id_list = state.idListSelected;
-  if (id_list) return state.list_todo_market.filter(list => list.id == id_list)[0];
+  if (id_list)
+    return state.list_todo_market.filter(list => list.id == id_list)[0];
   else return state.list_todo_market[0];
 }
 export function getAllItems(state) {
@@ -27,7 +29,9 @@ export function getAllUncheckedItems(state, getters) {
 }
 export function getAllCheckedItems(state, getters) {
   return function(id_list) {
-    console.log(getters.getAllItems(id_list).filter(item => item.isCheck == true));
+    console.log(
+      getters.getAllItems(id_list).filter(item => item.isCheck == true)
+    );
     return getters.getAllItems(id_list).filter(item => item.isCheck == true);
   };
 }

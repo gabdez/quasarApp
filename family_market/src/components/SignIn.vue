@@ -11,7 +11,7 @@
                 label-stacked
                 type="password"
                 :rules="[ val => val.length >= 6 || 'Please use minimum 6 characters']"
-                label="password"
+                label="mot de passe"
             />
         </q-card-section>
         <q-card-section class="text-red q-pb-none">

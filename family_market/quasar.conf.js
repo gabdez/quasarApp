@@ -55,7 +55,10 @@ module.exports = function(ctx) {
         "QBar",
         "QBreadcrumbs",
         "QBreadcrumbsEl",
-        "QBtnToggle"
+        "QBtnToggle",
+        "QTabs",
+        "QTab",
+        "QRouteTab"
       ],
 
       directives: ["Ripple", "CloseDialog", "CloseMenu", "TouchSwipe"],
@@ -86,7 +89,7 @@ module.exports = function(ctx) {
 
     devServer: {
       // https: true,
-      // port: 8080,
+      port: 8081,
       open: "Chrome" // opens browser window automatically
     },
 

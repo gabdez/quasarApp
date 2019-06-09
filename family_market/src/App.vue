@@ -1,6 +1,6 @@
 <template>
-    <div id="q-app" class="bgListLayout">
-        <transition :name="transitionName" mode="out-in">
+    <div id="q-app">
+        <transition :name="transitionName">
             <router-view/>
         </transition>
     </div>
@@ -21,9 +21,9 @@ export default {
             const toDepth = to.path.split("/").length;
             const fromDepth = from.path.split("/").length;
             this.transitionName = toDepth < fromDepth || to.path == "/" ? "slide-right" : "slide-left";
+            if(!this.$store.state.app.appLaunch) this.transitionName = "";
         }
     },
-    created() {},
     mounted() {
         this.$q.loading.show({
             delay: 400 // ms
@@ -37,7 +37,7 @@ export default {
                 this.$store.commit("users/setIsAuthenticated", true);
                 this.$store.dispatch("users/setUser");
                 this.$store.dispatch("lists/setAllLists", user.uid);
-                this.$router.push("/user");
+                this.$router.push("/home");
             } else {
                 console.log("there is no user");
                 this.$q.loading.hide();
