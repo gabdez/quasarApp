@@ -1,6 +1,9 @@
 import firebase from "firebase";
 
-export function userJoin({ commit, dispatch }, { email, password, username, url }) {
+export function userJoin(
+  { commit, dispatch },
+  { email, password, username, url }
+) {
   return new Promise((resolve, reject) => {
     firebase
       .auth()
@@ -110,17 +113,20 @@ export function createUserFirebase({}, { user, username, url }) {
 }
 
 export function updateUserFirebase({ state }, user) {
-  console.log("in action");
-  var db = firebase.firestore();
-  db.collection("Users")
-    .doc(state.uid)
-    .set(user)
-    .then(function() {
-      console.log("Document successfully written!");
-    })
-    .catch(function(error) {
-      console.error("Error writing document: ", error);
-    });
+  return new Promise((resolve, reject) => {
+    console.log("in action");
+    var db = firebase.firestore();
+    db.collection("Users")
+      .doc(state.uid)
+      .set(user)
+      .then(function() {
+        console.log("Document successfully written!");
+        resolve();
+      })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
+  });
 }
 export function getUsersInfo({ state }, userId) {
   return new Promise((resolve, reject) => {
