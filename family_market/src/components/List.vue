@@ -5,7 +5,7 @@
         v-ripple
         class="my-card text-white q-mt-sm"
         @click="goListItems(list.id)"
-        :style="{ background: '#747ca7', width: '42vh' }"
+        :style="{ background: '#747ca7', width: '42vh', minHeight: '70px' }"
     >
         <q-item-section>
             <q-item-label class="q-py-sm">
@@ -17,6 +17,51 @@
             >
                 {{ list.description }}
             </q-item-label>
+        </q-item-section>
+        <q-item-section side>
+            <q-btn flat icon="more_vert" class="text-white" @click.stop="">
+                <q-menu
+                    auto-close
+                    transition-show="scale"
+                    transition-hide="scale"
+                >
+                    <q-list style="min-width: 150px">
+                        <q-item v-ripple clickable v-close-menu>
+                            <q-item-section class="text-center">
+                                <q-item-label
+                                    @click.stop="
+                                        $emit('delete-confirmation', list.id)
+                                    "
+                                >
+                                    Delete
+                                    <q-icon
+                                        name="delete_forever"
+                                        color="red"
+                                        size="20px"
+                                    ></q-icon> </q-item-label
+                            ></q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-menu>
+                            <q-item-section class="text-center">
+                                <q-item-label
+                                    @click.stop="
+                                        $router.push(
+                                            '/user/EditList/' + list.id
+                                        )
+                                    "
+                                >
+                                    Edit
+                                    <q-icon
+                                        name="edit"
+                                        color="blue"
+                                        size="20px"
+                                    ></q-icon>
+                                </q-item-label>
+                            </q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-menu>
+            </q-btn>
         </q-item-section>
         <!-- <q-separator dark /> -->
         <!-- <q-card-actions class="flex-center">
@@ -62,17 +107,6 @@ export default {
         };
     },
     methods: {
-        deleteList() {
-            var list = Object.assign({}, this.listSelected);
-            this.$store
-                .dispatch("lists/deleteList", list)
-                .then(() => {
-                    console.log("document deleted");
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        },
         goListItems(id) {
             this.$store.commit("lists/setIdListSelected", id);
             this.$router.push("/" + this.listSelected.id + "/Items");

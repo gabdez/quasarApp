@@ -1,6 +1,33 @@
 <template>
     <q-page>
         <div v-if="allLists.length > 0" class="q-py-md q-px-sm container">
+            <q-input
+                class="q-my-sm no-border"
+                :bg-color="isFocused ? 'primary' : 'accent'"
+                color="white"
+                rounded
+                outlined
+                dense
+                v-model="search"
+                @focus="isFocused = true"
+                @blur="isFocused = false"
+                placeholder="search list by name"
+                :input-style="{ color: 'white' }"
+            >
+                <template v-slot:append>
+                    <q-icon
+                        :color="isFocused ? 'white' : 'grey'"
+                        name="close"
+                        @click="search = ''"
+                    ></q-icon>
+                </template>
+                <template v-slot:prepend>
+                    <q-icon
+                        :color="isFocused ? 'white' : 'grey'"
+                        name="search"
+                    ></q-icon>
+                </template>
+            </q-input>
             <q-list>
                 <transition-group
                     appear
@@ -8,8 +35,12 @@
                     appear-class="item-enter-appear"
                     appear-active-class="item-enter-active-appear"
                 >
-                    <template v-for="list in allLists">
-                        <List :key="list.id" :list="list"></List>
+                    <template v-for="list in listsSorted">
+                        <List
+                            :key="list.id"
+                            :list="list"
+                            @delete-confirmation="deleteConfirmation"
+                        ></List>
                     </template>
                 </transition-group>
             </q-list>
@@ -126,22 +157,46 @@ export default {
     components: { List },
     data() {
         return {
-            confirmDelete: false
+            confirmDelete: false,
+            search: "",
+            isFocused: false
         };
     },
     mounted() {},
     methods: {
         deleteConfirmation(id) {
+            console.log(id);
             this.confirmDelete = true;
             this.$store.commit("lists/setIdListSelected", id);
+        },
+        deleteList() {
+            var list = Object.assign({}, this.listSelected);
+            this.$store
+                .dispatch("lists/deleteList", list)
+                .then(() => {
+                    console.log("document deleted");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     },
     computed: {
         loaded() {
             return this.$store.getters["lists/getLoaded"];
         },
+        listsSorted() {
+            return this.search == ""
+                ? this.allLists
+                : this.allLists.filter(list => {
+                      return list.name
+                          .toLowerCase()
+                          .includes(this.search.toLowerCase());
+                  });
+        },
         ...mapGetters({
-            allLists: "lists/getAllLists"
+            allLists: "lists/getAllLists",
+            listSelected: "lists/getListSelected"
         })
     }
 };
