@@ -1,7 +1,7 @@
 <template>
     <div id="q-app">
         <transition :name="transitionName">
-            <router-view/>
+            <router-view />
         </transition>
     </div>
 </template>
@@ -20,8 +20,11 @@ export default {
         $route(to, from) {
             const toDepth = to.path.split("/").length;
             const fromDepth = from.path.split("/").length;
-            this.transitionName = toDepth < fromDepth || to.path == "/" ? "slide-right" : "slide-left";
-            if(!this.$store.state.app.appLaunch) this.transitionName = "";
+            this.transitionName =
+                toDepth < fromDepth || to.path == "/"
+                    ? "slide-right"
+                    : "slide-left";
+            if (!this.$store.state.app.appLaunch) this.transitionName = "";
         }
     },
     mounted() {
@@ -33,6 +36,7 @@ export default {
             console.log(user);
             if (user) {
                 console.log("there is a user");
+                this.$store.commit("app/setAppLaunch", true);
                 this.$store.commit("users/setUserUid", user.uid);
                 this.$store.commit("users/setIsAuthenticated", true);
                 this.$store.dispatch("users/setUser");

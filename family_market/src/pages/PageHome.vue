@@ -2,30 +2,16 @@
     <q-page>
         <div v-if="allLists.length > 0" class="q-py-md q-px-sm container">
             <q-input
-                class="q-my-sm no-border"
-                :bg-color="isFocused ? 'primary' : 'accent'"
-                color="white"
-                rounded
-                outlined
+                dark
                 dense
+                standout
                 v-model="search"
-                @focus="isFocused = true"
-                @blur="isFocused = false"
-                placeholder="search list by name"
-                :input-style="{ color: 'white' }"
+                placeholder="search for a list"
+                style="width: 42vh"
+                class="q-my-md text-white"
             >
                 <template v-slot:append>
-                    <q-icon
-                        :color="isFocused ? 'white' : 'grey'"
-                        name="close"
-                        @click="search = ''"
-                    ></q-icon>
-                </template>
-                <template v-slot:prepend>
-                    <q-icon
-                        :color="isFocused ? 'white' : 'grey'"
-                        name="search"
-                    ></q-icon>
+                    <q-icon color="grey" name="search"></q-icon>
                 </template>
             </q-input>
             <q-list>
@@ -158,8 +144,7 @@ export default {
     data() {
         return {
             confirmDelete: false,
-            search: "",
-            isFocused: false
+            search: ""
         };
     },
     mounted() {},
